@@ -1,0 +1,16 @@
+version: '3.8'
+services:
+  frontend:
+    container_name: assistant_photo_frontend_ui
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8192:4173"
+    depends_on:
+      - backend
+    networks:
+      - assistant-photo-front
+
+networks:
+  assistant-photo-front:
