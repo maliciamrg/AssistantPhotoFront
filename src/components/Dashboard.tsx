@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import Slider from 'react-slick';
-import {getPhotos, updatePhoto, sendUpdatedPhotos, getSeanceTypes, updateGetPhotos} from '../api';
+import { getPhotos, updatePhoto, sendUpdatedPhotos, getSeanceTypes, updateGetPhotos } from '../api';
 import { Photo, SeanceType } from '../types';
-import { Settings, LogOut, Play, Star, Flag, Calendar, AlertCircle, Image, Filter } from 'lucide-react';
+import { Settings, LogOut, Check, Star, Flag, Calendar, AlertCircle, Image, Filter } from 'lucide-react';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
@@ -304,8 +304,8 @@ export default function Dashboard() {
                   isSending ? 'opacity-50 cursor-not-allowed' : ''
                 }`}
               >
-                <Play className={`w-5 h-5 ${isSending ? 'animate-spin' : ''}`} />
-                {isSending ? 'Sending...' : 'Action'}
+                <Check className={`w-5 h-5 ${isSending ? 'animate-spin' : ''}`} />
+                {isSending ? 'Sending...' : 'Validate'}
               </button>
             </div>
             <button 
