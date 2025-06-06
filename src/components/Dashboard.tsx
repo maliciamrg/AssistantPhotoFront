@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import Slider from 'react-slick';
-import { getPhotos, updatePhoto, sendUpdatedPhotos, getSeanceTypes, updateGetPhotos } from '../api';
+import { getPhotos, updatePhoto, sendUpdatedPhotos, getSeanceTypes, updateGetPhotos, validateRepertoire } from '../api';
 import { Photo, SeanceType } from '../types';
-import { Settings, LogOut, Check, Star, Flag, Calendar, AlertCircle, Image, Filter } from 'lucide-react';
+import { Settings, LogOut, Check, Star, Flag, Calendar, AlertCircle, Image, Filter, CheckCircle, XCircle, Loader } from 'lucide-react';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
@@ -37,18 +37,18 @@ export default function Dashboard() {
   const [isSending, setIsSending] = useState(false);
   const [sliderKey, setSliderKey] = useState(0);
   const [sliderRef, setSliderRef] = useState<Slider | null>(null);
+  const [validationStatus, setValidationStatus] = useState<'loading' | 'validate' | 'invalid' | null>(null);
   const navigate = useNavigate();
   const location = useLocation();
   const repertoirePath = location.state?.repertoirePath || 'Unknown Repertoire';
   const repertoireName = location.state?.repertoireName || 'Unknown Repertoire';
   const typeId = location.state?.typeId;
 
-
   useEffect(() => {
     const fetchData = async () => {
       try {
         const [photosList, types] = await Promise.all([
-          getPhotos(typeId,repertoireName),
+          getPhotos(typeId, repertoireName),
           getSeanceTypes()
         ]);
         setPhotos(Array.isArray(photosList) ? photosList : []);
@@ -60,7 +60,23 @@ export default function Dashboard() {
       }
     };
     fetchData();
-  }, [typeId]);
+  }, [typeId, repertoireName]);
+
+  useEffect(() => {
+    const checkValidation = async () => {
+      if (repertoireName && repertoireName !== 'Unknown Repertoire') {
+        setValidationStatus('loading');
+        try {
+          const result = await validateRepertoire(repertoireName);
+          setValidationStatus(result as 'validate' | 'invalid');
+        } catch (error) {
+          console.error('Error validating repertoire:', error);
+          setValidationStatus('invalid');
+        }
+      }
+    };
+    checkValidation();
+  }, [repertoireName]);
 
   const calculateDateRange = () => {
     if (photos.length === 0) return null;
@@ -137,7 +153,6 @@ export default function Dashboard() {
     return true;
   });
 
-
   useEffect(() => {
     if (filteredPhotos.length === 0) {
       setCurrentSlide(0);
@@ -176,9 +191,9 @@ export default function Dashboard() {
   };
 
   const refreshPhotos = async () => {
-    await updateGetPhotos(repertoireName,repertoirePath);
+    await updateGetPhotos(repertoireName, repertoirePath);
     const [photosList] = await Promise.all([
-      getPhotos(typeId,repertoireName)
+      getPhotos(typeId, repertoireName)
     ]);
     setPhotos(Array.isArray(photosList) ? photosList : []);
   };
@@ -273,6 +288,19 @@ export default function Dashboard() {
     ));
   };
 
+  const renderValidationIcon = () => {
+    switch (validationStatus) {
+      case 'loading':
+        return <Loader className="w-6 h-6 text-blue-500 animate-spin" />;
+      case 'validate':
+        return <CheckCircle className="w-6 h-6 text-green-500" />;
+      case 'invalid':
+        return <XCircle className="w-6 h-6 text-red-500" />;
+      default:
+        return null;
+    }
+  };
+
   const sliderSettings = {
     dots: true,
     infinite: filteredPhotos.length > 1,
@@ -322,7 +350,10 @@ export default function Dashboard() {
       <div className="max-w-6xl mx-auto px-4 py-8">
         <div className="bg-white rounded-lg shadow-lg p-6 mb-6">
           <div className="flex flex-col space-y-4">
-            <h2 className="text-2xl font-bold text-gray-800">{repertoireName}</h2>
+            <div className="flex items-center gap-3">
+              {renderValidationIcon()}
+              <h2 className="text-2xl font-bold text-gray-800">{repertoireName}</h2>
+            </div>
 
             <div className="flex items-center gap-6 bg-gray-50 p-3 rounded-lg">
               {dateRange && (
@@ -441,7 +472,7 @@ export default function Dashboard() {
                           className="relative aspect-video flex justify-center items-center bg-gray-300"
                       >
                           <img
-                              src={`data:image/png;base64,${photo.thumbnail}`}
+                              src={photo.url}
                               alt="Photo"
                               className="content-center h-full object-cover rounded-lg mx-auto"
                           />
