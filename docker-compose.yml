@@ -6,7 +6,7 @@ services:
       context: .
       dockerfile: Dockerfile
     ports:
-      - "8192:4173"
+      - "8192:5173"
     networks:
       - assistant-photo-front
 
