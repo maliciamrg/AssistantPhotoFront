@@ -1,15 +1,21 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import Slider from 'react-slick';
-import { getPhotos, updatePhoto, sendUpdatedPhotos, getSeanceTypes, updateGetPhotos, validateRepertoire } from '../api';
+import { getPhotos, updatePhoto, sendUpdatedPhotos, getSeanceTypes, updateGetPhotos, validateRepertoire, getRepertoireNameFields, updateRepertoireName } from '../api';
 import { Photo, SeanceType } from '../types';
-import { Settings, LogOut, Check, Star, Flag, Calendar, AlertCircle, Image, Filter, CheckCircle, XCircle, Loader } from 'lucide-react';
+import { Settings, LogOut, Check, Star, Flag, Calendar, AlertCircle, Image, Filter, CheckCircle, XCircle, Loader, Edit3, X } from 'lucide-react';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
 type FilterType = {
   stars: number | null;
   flag: 'all' | 'pick' | 'reject' | 'unflagged';
+};
+
+type RepertoireField = {
+  id: string;
+  label: string;
+  options: string[];
 };
 
 const formatDate = (dateString: string) => {
@@ -38,17 +44,28 @@ export default function Dashboard() {
   const [sliderKey, setSliderKey] = useState(0);
   const [sliderRef, setSliderRef] = useState<Slider | null>(null);
   const [validationStatus, setValidationStatus] = useState<'loading' | 'validate' | 'invalid' | null>(null);
+  const [showRepertoireEditor, setShowRepertoireEditor] = useState(false);
+  const [repertoireFields, setRepertoireFields] = useState<RepertoireField[]>([]);
+  const [selectedFieldValues, setSelectedFieldValues] = useState<Record<string, string>>({});
+  const [isLoadingFields, setIsLoadingFields] = useState(false);
+  const [isUpdatingName, setIsUpdatingName] = useState(false);
+  const [currentRepertoireName, setCurrentRepertoireName] = useState('');
+  
   const navigate = useNavigate();
   const location = useLocation();
   const repertoirePath = location.state?.repertoirePath || 'Unknown Repertoire';
-  const repertoireName = location.state?.repertoireName || 'Unknown Repertoire';
+  const initialRepertoireName = location.state?.repertoireName || 'Unknown Repertoire';
   const typeId = location.state?.typeId;
+
+  useEffect(() => {
+    setCurrentRepertoireName(initialRepertoireName);
+  }, [initialRepertoireName]);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const [photosList, types] = await Promise.all([
-          getPhotos(typeId, repertoireName),
+          getPhotos(typeId, currentRepertoireName),
           getSeanceTypes()
         ]);
         setPhotos(Array.isArray(photosList) ? photosList : []);
@@ -60,14 +77,14 @@ export default function Dashboard() {
       }
     };
     fetchData();
-  }, [typeId, repertoireName]);
+  }, [typeId, currentRepertoireName]);
 
   useEffect(() => {
     const checkValidation = async () => {
-      if (repertoireName && repertoireName !== 'Unknown Repertoire') {
+      if (currentRepertoireName && currentRepertoireName !== 'Unknown Repertoire') {
         setValidationStatus('loading');
         try {
-          const result = await validateRepertoire(repertoireName);
+          const result = await validateRepertoire(currentRepertoireName);
           setValidationStatus(result as 'validate' | 'invalid');
         } catch (error) {
           console.error('Error validating repertoire:', error);
@@ -76,7 +93,60 @@ export default function Dashboard() {
       }
     };
     checkValidation();
-  }, [repertoireName]);
+  }, [currentRepertoireName]);
+
+  const handleValidationIconClick = async () => {
+    if (validationStatus === 'invalid') {
+      setIsLoadingFields(true);
+      setShowRepertoireEditor(true);
+      try {
+        const fieldsData = await getRepertoireNameFields(typeId);
+        setRepertoireFields(fieldsData.fields);
+        setSelectedFieldValues({});
+      } catch (error) {
+        console.error('Error fetching repertoire fields:', error);
+      } finally {
+        setIsLoadingFields(false);
+      }
+    }
+  };
+
+  const handleFieldValueChange = (fieldId: string, value: string) => {
+    setSelectedFieldValues(prev => ({
+      ...prev,
+      [fieldId]: value
+    }));
+  };
+
+  const handleRepertoireNameUpdate = async () => {
+    const allFieldsSelected = repertoireFields.every(field => selectedFieldValues[field.id]);
+    
+    if (!allFieldsSelected) {
+      alert('Please select a value for each field');
+      return;
+    }
+
+    const newRepertoireName = repertoireFields
+      .map(field => selectedFieldValues[field.id])
+      .join('_');
+
+    setIsUpdatingName(true);
+    try {
+      await updateRepertoireName(typeId, currentRepertoireName, newRepertoireName);
+      setCurrentRepertoireName(newRepertoireName);
+      setShowRepertoireEditor(false);
+      setSelectedFieldValues({});
+      // Trigger validation check for the new name
+      setValidationStatus('loading');
+      const result = await validateRepertoire(newRepertoireName);
+      setValidationStatus(result as 'validate' | 'invalid');
+    } catch (error) {
+      console.error('Error updating repertoire name:', error);
+      alert('Failed to update repertoire name');
+    } finally {
+      setIsUpdatingName(false);
+    }
+  };
 
   const calculateDateRange = () => {
     if (photos.length === 0) return null;
@@ -191,9 +261,9 @@ export default function Dashboard() {
   };
 
   const refreshPhotos = async () => {
-    await updateGetPhotos(repertoireName, repertoirePath);
+    await updateGetPhotos(currentRepertoireName, repertoirePath);
     const [photosList] = await Promise.all([
-      getPhotos(typeId, repertoireName)
+      getPhotos(typeId, currentRepertoireName)
     ]);
     setPhotos(Array.isArray(photosList) ? photosList : []);
   };
@@ -212,13 +282,16 @@ export default function Dashboard() {
 
   const handleClickOutside = useCallback((e: React.MouseEvent) => {
     const target = e.target as HTMLElement;
-    if (!target.closest('.context-menu')) {
+    if (!target.closest('.context-menu') && !target.closest('.repertoire-editor')) {
       setContextMenu({ x: 0, y: 0, photoId: null });
+      if (!isLoadingFields && !isUpdatingName) {
+        setShowRepertoireEditor(false);
+      }
     }
-  }, []);
+  }, [isLoadingFields, isUpdatingName]);
 
   const handleKeyPress = useCallback(async (e: KeyboardEvent) => {
-    if (filteredPhotos.length === 0) return;
+    if (filteredPhotos.length === 0 || showRepertoireEditor) return;
     
     const currentPhoto = filteredPhotos[currentSlide];
     if (!currentPhoto) return;
@@ -254,17 +327,17 @@ export default function Dashboard() {
     } catch (error) {
       console.error('Error updating photo:', error);
     }
-  }, [photos, currentSlide, filteredPhotos]);
+  }, [photos, currentSlide, filteredPhotos, showRepertoireEditor]);
 
   const handleKeyDown = useCallback((e: KeyboardEvent) => {
-    if (!sliderRef) return;
+    if (!sliderRef || showRepertoireEditor) return;
 
     if (e.key === 'ArrowLeft') {
       sliderRef.slickPrev();
     } else if (e.key === 'ArrowRight') {
       sliderRef.slickNext();
     }
-  }, [sliderRef]);
+  }, [sliderRef, showRepertoireEditor]);
 
   useEffect(() => {
     window.addEventListener('keypress', handleKeyPress);
@@ -295,7 +368,13 @@ export default function Dashboard() {
       case 'validate':
         return <CheckCircle className="w-6 h-6 text-green-500" />;
       case 'invalid':
-        return <XCircle className="w-6 h-6 text-red-500" />;
+        return (
+          <XCircle 
+            className="w-6 h-6 text-red-500 cursor-pointer hover:text-red-700 transition-colors" 
+            onClick={handleValidationIconClick}
+            title="Click to edit repertoire name"
+          />
+        );
       default:
         return null;
     }
@@ -352,7 +431,7 @@ export default function Dashboard() {
           <div className="flex flex-col space-y-4">
             <div className="flex items-center gap-3">
               {renderValidationIcon()}
-              <h2 className="text-2xl font-bold text-gray-800">{repertoireName}</h2>
+              <h2 className="text-2xl font-bold text-gray-800">{currentRepertoireName}</h2>
             </div>
 
             <div className="flex items-center gap-6 bg-gray-50 p-3 rounded-lg">
@@ -503,6 +582,97 @@ export default function Dashboard() {
           )}
         </div>
       </div>
+
+      {/* Repertoire Name Editor Modal */}
+      {showRepertoireEditor && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white rounded-lg shadow-xl p-6 w-full max-w-md mx-4 repertoire-editor">
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="text-lg font-semibold text-gray-800 flex items-center gap-2">
+                <Edit3 className="w-5 h-5" />
+                Edit Repertoire Name
+              </h3>
+              <button
+                onClick={() => setShowRepertoireEditor(false)}
+                disabled={isLoadingFields || isUpdatingName}
+                className="text-gray-400 hover:text-gray-600 transition-colors"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            {isLoadingFields ? (
+              <div className="flex items-center justify-center py-8">
+                <Loader className="w-8 h-8 text-indigo-600 animate-spin" />
+                <span className="ml-2 text-gray-600">Loading fields...</span>
+              </div>
+            ) : (
+              <div className="space-y-4">
+                <div className="text-sm text-gray-600 mb-4">
+                  Current name: <span className="font-medium">{currentRepertoireName}</span>
+                </div>
+
+                {repertoireFields.map((field) => (
+                  <div key={field.id}>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      {field.label}
+                    </label>
+                    <select
+                      value={selectedFieldValues[field.id] || ''}
+                      onChange={(e) => handleFieldValueChange(field.id, e.target.value)}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                      disabled={isUpdatingName}
+                    >
+                      <option value="">Select {field.label.toLowerCase()}</option>
+                      {field.options.map((option) => (
+                        <option key={option} value={option}>
+                          {option}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                ))}
+
+                {repertoireFields.length > 0 && (
+                  <div className="mt-4 p-3 bg-gray-50 rounded-md">
+                    <div className="text-sm text-gray-600">Preview:</div>
+                    <div className="font-medium text-gray-800">
+                      {repertoireFields.map(field => selectedFieldValues[field.id] || `[${field.label}]`).join('_')}
+                    </div>
+                  </div>
+                )}
+
+                <div className="flex gap-3 mt-6">
+                  <button
+                    onClick={handleRepertoireNameUpdate}
+                    disabled={
+                      isUpdatingName || 
+                      !repertoireFields.every(field => selectedFieldValues[field.id])
+                    }
+                    className="flex-1 bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                  >
+                    {isUpdatingName ? (
+                      <>
+                        <Loader className="w-4 h-4 animate-spin" />
+                        Updating...
+                      </>
+                    ) : (
+                      'Update Name'
+                    )}
+                  </button>
+                  <button
+                    onClick={() => setShowRepertoireEditor(false)}
+                    disabled={isUpdatingName}
+                    className="px-4 py-2 text-gray-600 hover:text-gray-800 transition-colors disabled:opacity-50"
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
 
       {contextMenu.photoId && (
           <div
