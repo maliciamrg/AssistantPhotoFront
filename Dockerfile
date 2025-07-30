@@ -1,23 +1,16 @@
-# Use official Node.js image as a base
-FROM node:18-alpine
-
-# Set the working directory in the container
+# Build stage
+FROM node:18-alpine as build
 WORKDIR /app
-
-# Copy package.json and package-lock.json (if it exists) to the working directory
 COPY package*.json ./
-
-# Remove node_modules and package-lock.json (if it exists) to avoid conflicts
 RUN rm -rf node_modules package-lock.json
-
-# Install dependencies
 RUN npm install
-
-# Copy the rest of the application files
 COPY . .
+RUN npm run build
 
-# Expose the port that Vite will run on
-EXPOSE 4173
-
-# Command to run the app in development mode
-CMD ["npm", "run", "dev"]
+# Production stage
+FROM node:18-alpine
+RUN npm install -g serve
+WORKDIR /app
+COPY --from=build /app/build ./build
+EXPOSE 3000
+CMD ["serve", "-s", "build", "-l", "3000"]

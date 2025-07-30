@@ -70,6 +70,7 @@ export default function Dashboard() {
     const [photoShootFields, setphotoShootFields] = useState<photoShootField[]>([]);
     const [selectedFieldValues, setSelectedFieldValues] = useState<Record<string, string>>({});
     const [isLoadingFields, setIsLoadingFields] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
     const [isUpdatingName, setIsUpdatingName] = useState(false);
     const [currentphotoshootName, setCurrentphotoshootName] = useState('');
 
@@ -86,19 +87,24 @@ export default function Dashboard() {
 
     useEffect(() => {
         const fetchData = async () => {
-            try {
-                const [photosList, types]: [Photo[], PhotoshootType[]] = await Promise.all([
-                    getPhotos(photoshootTypeName, currentphotoshootName),
-                    getPhotoshootTypes()
-                ]);
-                setPhotos(Array.isArray(photosList) ? photosList : []);
-                const currentType = types.find(t => t.photoshootTypeEnum === photoshootTypeName);
-                console.trace("photoshootTypeName",photoshootTypeName)
-                console.trace("currentType",currentType)
-                setPhotoshootType(currentType || null);
-            } catch (error) {
-                console.error('Error fetching data:', error);
-                setPhotos([]);
+            if (currentphotoshootName && currentphotoshootName !== 'Unknown photoShoot' && currentphotoshootName !== '.') {
+                setIsLoading(true);
+                try {
+                    const [photosList, types]: [Photo[], PhotoshootType[]] = await Promise.all([
+                        getPhotos(photoshootTypeName, currentphotoshootName),
+                        getPhotoshootTypes()
+                    ]);
+                    setPhotos(Array.isArray(photosList) ? photosList : []);
+                    const currentType = types.find(t => t.photoshootTypeEnum === photoshootTypeName);
+                    console.trace("photoshootTypeName", photoshootTypeName)
+                    console.trace("currentType", currentType)
+                    setPhotoshootType(currentType || null);
+                } catch (error) {
+                    console.error('Error fetching data:', error);
+                    setPhotos([]);
+                } finally {
+                    setIsLoading(false);
+                }
             }
         };
         fetchData();
@@ -269,15 +275,22 @@ export default function Dashboard() {
         console.log("fetchThumbnail?")
         if (filteredPhotos.length === 0 || showphotoShootEditor) return;
         const currentPhoto = filteredPhotos[currentSlide];
-        console.log("currentPhoto",currentPhoto.id)
+        console.log("currentPhoto", currentPhoto.id)
         let isMounted = true;
         let objectUrl: string;
-        fetchThumbnail(currentPhoto.id).then((url) => {
-            if (isMounted) {
-                objectUrl = url;
-                setThumbnailUrl(url);
-            }
-        });
+        setIsLoading(true);
+        try {
+            fetchThumbnail(currentPhoto.id).then((url) => {
+                if (isMounted) {
+                    objectUrl = url;
+                    setThumbnailUrl(url);
+                }
+            });
+        } catch (error) {
+            console.error('Error retieve thumbnail', error);
+        } finally {
+            setIsLoading(false);
+        }
 
         return () => {
             isMounted = false;
@@ -308,6 +321,7 @@ export default function Dashboard() {
     };
 
     const handleRefreshPhotos = async () => {
+        setIsSending(true);
         try {
             const [photosList] = await Promise.all([
                 getPhotos(photoshootTypeName, currentphotoshootName)
@@ -584,6 +598,11 @@ export default function Dashboard() {
                     </div>
                 </div>
 
+                {isLoading && (
+                    <div className="fixed inset-0 bg-white bg-opacity-70 z-50 flex items-center justify-center">
+                        <div className="animate-spin rounded-full h-12 w-12 border-4 border-blue-500 border-t-transparent"></div>
+                    </div>
+                )}
                 <div className="bg-white rounded-lg shadow-lg p-6">
                     {filteredPhotos.length > 0 ? (
                         <Slider {...sliderSettings} key={sliderKey}>
