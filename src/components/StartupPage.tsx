@@ -10,6 +10,7 @@ export default function StartupPage() {
   const [selectedType, setSelectedType] = useState<string>('');
   const [selectedphotoShoot, setSelectedphotoShoot] = useState<string>('');
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const fetchPhotoshootTypes = async () => {
@@ -27,6 +28,7 @@ export default function StartupPage() {
   useEffect(() => {
     const fetchPhotoShoot = async () => {
       if (selectedType) {
+        setIsLoading(true); // 🔒 lock UI
         try {
           const photoShootList = await getPhotoShoot(selectedType);
           setphotoShoots(Array.isArray(photoShootList) ? photoShootList : []);
@@ -34,6 +36,8 @@ export default function StartupPage() {
         } catch (error) {
           console.error('Error fetching photoShoots:', error);
           setphotoShoots([]);
+        } finally {
+          setIsLoading(false); // 🔓 unlock UI
         }
       }
     };
@@ -63,6 +67,11 @@ export default function StartupPage() {
         <h1 className="text-2xl font-bold text-center text-gray-800 mb-6">
           Photo Session Setup
         </h1>
+        {isLoading && (
+            <div className="fixed inset-0 bg-white bg-opacity-70 z-50 flex items-center justify-center">
+              <div className="animate-spin rounded-full h-12 w-12 border-4 border-blue-500 border-t-transparent"></div>
+            </div>
+        )}
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -91,7 +100,7 @@ export default function StartupPage() {
               value={selectedphotoShoot}
               onChange={(e) => setSelectedphotoShoot(e.target.value)}
               className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
-              disabled={!selectedType}
+              disabled={!selectedType || isLoading}
               required
             >
               <option value="">Select a photoShoot</option>
