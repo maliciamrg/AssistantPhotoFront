@@ -1,17 +1,21 @@
 # Build stage
-FROM node:18-alpine as build
+FROM node:18-alpine
+
 WORKDIR /app
-COPY package*.json ./
+
+COPY package.json .
+
 RUN rm -rf node_modules package-lock.json
+
 RUN npm install
+
+RUN npm i -g serve
+
 COPY . .
+
 RUN npm run build
 
-# Production stage
-FROM node:18-alpine
-RUN npm install serve -g
-WORKDIR /app
-COPY --from=build /app/dist ./dist
 EXPOSE 3000
-RUN serve -s dist
+
+CMD [ "serve", "-s", "dist" ]
 
