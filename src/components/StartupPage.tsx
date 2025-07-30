@@ -1,54 +1,54 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { getSeanceTypes, getSeanceRepertoire } from '../api';
-import { SeanceType, SeanceRepertoire } from '../types';
+import { getPhotoshootTypes, getPhotoShoot } from '../api';
+import { PhotoshootType, PhotoShoot } from '../types';
 import { Camera } from 'lucide-react';
 
 export default function StartupPage() {
-  const [seanceTypes, setSeanceTypes] = useState<SeanceType[]>([]);
-  const [repertoires, setRepertoires] = useState<SeanceRepertoire[]>([]);
+  const [PhotoshootTypes, setPhotoshootTypes] = useState<PhotoshootType[]>([]);
+  const [photoShoots, setphotoShoots] = useState<PhotoShoot[]>([]);
   const [selectedType, setSelectedType] = useState<string>('');
-  const [selectedRepertoire, setSelectedRepertoire] = useState<string>('');
+  const [selectedphotoShoot, setSelectedphotoShoot] = useState<string>('');
   const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchSeanceTypes = async () => {
+    const fetchPhotoshootTypes = async () => {
       try {
-        const types = await getSeanceTypes();
-        setSeanceTypes(Array.isArray(types) ? types : []);
+        const types = await getPhotoshootTypes();
+        setPhotoshootTypes(Array.isArray(types) ? types : []);
       } catch (error) {
         console.error('Error fetching seance types:', error);
-        setSeanceTypes([]);
+        setPhotoshootTypes([]);
       }
     };
-    fetchSeanceTypes();
+    fetchPhotoshootTypes();
   }, []);
 
   useEffect(() => {
-    const fetchRepertoires = async () => {
+    const fetchPhotoShoot = async () => {
       if (selectedType) {
         try {
-          const repertoireList = await getSeanceRepertoire(selectedType);
-          setRepertoires(Array.isArray(repertoireList) ? repertoireList : []);
-          setSelectedRepertoire('');
+          const photoShootList = await getPhotoShoot(selectedType);
+          setphotoShoots(Array.isArray(photoShootList) ? photoShootList : []);
+          setSelectedphotoShoot('');
         } catch (error) {
-          console.error('Error fetching repertoires:', error);
-          setRepertoires([]);
+          console.error('Error fetching photoShoots:', error);
+          setphotoShoots([]);
         }
       }
     };
-    fetchRepertoires();
+    fetchPhotoShoot();
   }, [selectedType]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (selectedType && selectedRepertoire) {
-      const selectedRepertoireData = repertoires.find(r => r.id === selectedRepertoire);
+    if (selectedType && selectedphotoShoot) {
+      const selectedphotoShootData = photoShoots.find(r => r.name === selectedphotoShoot);
       navigate('/dashboard', { 
         state: {
-          repertoirePath: selectedRepertoireData?.path || 'Unknown Repertoire',
-          repertoireName: selectedRepertoireData?.name || selectedRepertoireData?.id ||'Unknown Repertoire',
-          typeId: selectedType // Add the typeId to the navigation state
+          photoShootPath: selectedphotoShootData?.path || 'Unknown photoShoot',
+          photoshootName: selectedphotoShootData?.name || selectedphotoShootData?.name ||'Unknown photoShoot',
+          photoshootTypeName: selectedType // Add the photoshootTypeName to the navigation state
         }
       });
     }
@@ -75,9 +75,9 @@ export default function StartupPage() {
               required
             >
               <option value="">Select a type</option>
-              {seanceTypes.map((type) => (
-                <option key={type.id} value={type.id}>
-                  {type.name}
+              {PhotoshootTypes.map((type) => (
+                <option key={type.photoshootTypeEnum} value={type.photoshootTypeEnum}>
+                  {type.photoshootTypeEnum}
                 </option>
               ))}
             </select>
@@ -85,19 +85,19 @@ export default function StartupPage() {
 
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
-              Séance Repertoire
+              Séance photoShoot
             </label>
             <select
-              value={selectedRepertoire}
-              onChange={(e) => setSelectedRepertoire(e.target.value)}
+              value={selectedphotoShoot}
+              onChange={(e) => setSelectedphotoShoot(e.target.value)}
               className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
               disabled={!selectedType}
               required
             >
-              <option value="">Select a repertoire</option>
-              {repertoires.map((repertoire) => (
-                <option key={repertoire.id} value={repertoire.id}>
-                  {repertoire.name || repertoire.id}
+              <option value="">Select a photoShoot</option>
+              {photoShoots.map((photoShoot) => (
+                <option key={photoShoot.name} value={photoShoot.name}>
+                  {photoShoot.name || photoShoot.name}
                 </option>
               ))}
             </select>
@@ -106,7 +106,7 @@ export default function StartupPage() {
           <button
             type="submit"
             className="w-full bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700 transition duration-200"
-            disabled={!selectedType || !selectedRepertoire}
+            disabled={!selectedType || !selectedphotoShoot}
           >
             Continue to Dashboard
           </button>
