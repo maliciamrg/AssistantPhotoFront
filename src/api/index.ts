@@ -1445,12 +1445,16 @@ export const getPhotoShoot = async (photoshootTypeName: string) => {
   }
 };
 
-export const getPhotos = async (photoshootTypeName: string, photoshootName: string) => {
+export const getPhotos = async (photoshootTypeName: string, photoshootName: string, useCache: boolean = true) => {
   if (import.meta.env.DEV) {
     return MOCK_PHOTOS;
   }
   try {
-    const response = await fetch(`${API_BASE_URL}/photoshoot/${photoshootTypeName}/${photoshootName}`);
+    let urlToCall = `${API_BASE_URL}/photoshoot/${photoshootTypeName}/${photoshootName}`;
+    if (!useCache) {
+      urlToCall = `${API_BASE_URL}/photoshoot/${photoshootTypeName}/${photoshootName}/nocache`;
+    }
+    const response = await fetch(urlToCall);
 
     if (!response.ok) {
       throw new Error('Failed to fetch seance photoShoot');
@@ -1474,7 +1478,7 @@ export const updatePhoto = async (photoId: string, updates: any) => {
     throw new Error('Photo not found');
   }
   try {
-    const response = await fetch(`${API_BASE_URL}/photos/${photoId}/metadata`, {
+    const response = await fetch(`${API_BASE_URL}/photo/${photoId}/metadata`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -1492,13 +1496,82 @@ export const updatePhoto = async (photoId: string, updates: any) => {
   }
 };
 
+
+export const updatePhotoStar = async (photoId: string, nbStar: number) => {
+  console.trace("updatePhoto",photoId, JSON.stringify(nbStar))
+  if (import.meta.env.DEV) {
+    const photoIndex = MOCK_PHOTOS.findIndex(p => p.id === photoId);
+    if (photoIndex !== -1) {
+      MOCK_PHOTOS[photoIndex] = { ...MOCK_PHOTOS[photoIndex], rating: nbStar };
+      return MOCK_PHOTOS[photoIndex];
+    }
+    throw new Error('Photo not found');
+  }
+  try {
+    const response = await fetch(`${API_BASE_URL}/photo/${photoId}/star/${nbStar}`, {
+      method: 'PUT'
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to update photo');
+    }
+    return await response.json();
+  } catch (error) {
+    console.error('Error updating photo:', error);
+    throw error;
+  }
+};
+export const updatePhotoPick = async (photoId: string, valuePick: number) => {
+  console.trace("updatePhoto",photoId, JSON.stringify(valuePick))
+  if (import.meta.env.DEV) {
+    const photoIndex = MOCK_PHOTOS.findIndex(p => p.id === photoId);
+    if (photoIndex !== -1) {
+      MOCK_PHOTOS[photoIndex] = { ...MOCK_PHOTOS[photoIndex], pick: valuePick };
+      return MOCK_PHOTOS[photoIndex];
+    }
+    throw new Error('Photo not found');
+  }
+  try {
+    const response = await fetch(`${API_BASE_URL}/photo/${photoId}/pick/${valuePick}`, {
+      method: 'PUT'
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to update photo');
+    }
+    return await response.json();
+  } catch (error) {
+    console.error('Error updating photo:', error);
+    throw error;
+  }
+};
+
 // Mock API call for photoShoot validation
-export const validatephotoShoot = async (photoshootName: string): Promise<'validate' | 'invalid'> => {
-  // Simulate API delay
-  await new Promise(resolve => setTimeout(resolve, 1000));
-  
-  // Mock response - 70% chance of being valid
-  return Math.random() > 0.3 ? 'validate' : 'invalid';
+export const validatephotoShoot = async (photoshootTypeName: string ,photoshootName: string): Promise<'validate' | 'invalid'> => {
+  console.trace("validatephotoShoot",photoshootTypeName, photoshootName)
+  if (import.meta.env.DEV) {
+    await new Promise(resolve => setTimeout(resolve, 1000));
+    // Mock response - 70% chance of being valid
+    return Math.random() > 0.3 ? 'validate' : 'invalid';
+  }
+  try {
+    const response = await fetch(`${API_BASE_URL}/photoshoot/${photoshootTypeName}/${photoshootName}/validate`);
+
+    if (!response.ok) {
+      return 'invalid';
+    }
+
+    const result = await response.json();
+
+    if (result.valid === true) {
+      return 'validate';
+    } else {
+      return 'invalid';
+    }
+  } catch (error) {
+    console.error('Error updating photo:', error);
+    throw error;
+  }
 };
 
 // Mock API call to get photoShoot name fields configuration

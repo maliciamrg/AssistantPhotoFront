@@ -6,8 +6,8 @@ import {
     getPhotos,
     getphotoshootNameFields,
     getPhotoshootTypes,
-    updatePhoto,
-    updatephotoshootName,
+    updatePhoto, updatePhotoPick,
+    updatephotoshootName, updatePhotoStar,
     validatephotoShoot
 } from '../api';
 import {Photo, PhotoMetadataDTO, PhotoshootType} from '../types';
@@ -89,6 +89,7 @@ export default function Dashboard() {
         const fetchData = async () => {
             if (currentphotoshootName && currentphotoshootName !== 'Unknown photoShoot' && currentphotoshootName !== '.') {
                 setIsLoading(true);
+                setValidationStatus('loading');
                 try {
                     const [photosList, types]: [Photo[], PhotoshootType[]] = await Promise.all([
                         getPhotos(photoshootTypeName, currentphotoshootName),
@@ -105,17 +106,8 @@ export default function Dashboard() {
                 } finally {
                     setIsLoading(false);
                 }
-            }
-        };
-        fetchData();
-    }, [photoshootTypeName, currentphotoshootName]);
-
-    useEffect(() => {
-        const checkValidation = async () => {
-            if (currentphotoshootName && currentphotoshootName !== 'Unknown photoShoot') {
-                setValidationStatus('loading');
                 try {
-                    const result = await validatephotoShoot(currentphotoshootName);
+                    const result = await validatephotoShoot(photoshootTypeName,currentphotoshootName);
                     setValidationStatus(result as 'validate' | 'invalid');
                 } catch (error) {
                     console.error('Error validating photoShoot:', error);
@@ -123,8 +115,8 @@ export default function Dashboard() {
                 }
             }
         };
-        checkValidation();
-    }, [currentphotoshootName]);
+        fetchData();
+    }, [photoshootTypeName,currentphotoshootName]);
 
     const handleValidationIconClick = async () => {
         if (validationStatus === 'invalid') {
@@ -169,7 +161,7 @@ export default function Dashboard() {
             setSelectedFieldValues({});
             // Trigger validation check for the new name
             setValidationStatus('loading');
-            const result = await validatephotoShoot(newphotoshootName);
+            const result = await validatephotoShoot(photoshootTypeName,newphotoshootName);
             setValidationStatus(result as 'validate' | 'invalid');
         } catch (error) {
             console.error('Error updating photoShoot name:', error);
@@ -208,7 +200,9 @@ export default function Dashboard() {
 
     const maxPhotos = calculateMaxPhotos();
     const pickedPhotos = photos.filter(p => p.pick == 1).length;
+    const unflagPhotos = photos.filter(p => p.pick == 0).length;
     const isOverLimit = maxPhotos !== null && pickedPhotos > maxPhotos;
+    const isOverLimitUnflag = unflagPhotos > 0;
 
     const calculateStarLimits = () => {
         if (!PhotoshootType?.ratioStarMax || pickedPhotos === 0) return null;
@@ -324,7 +318,7 @@ export default function Dashboard() {
         setIsSending(true);
         try {
             const [photosList] = await Promise.all([
-                getPhotos(photoshootTypeName, currentphotoshootName)
+                getPhotos(photoshootTypeName, currentphotoshootName,false)
             ]);
             alert('Photos have been successfully retrieve from the API');
             setPhotos(Array.isArray(photosList) ? photosList : []);
@@ -360,26 +354,17 @@ export default function Dashboard() {
         try {
             if (['0', '1', '2', '3', '4', '5'].includes(key)) {
                 const starValue = parseInt(key, 10);
-                const updates: PhotoMetadataDTO = {
-                    rating: starValue
-                } as PhotoMetadataDTO;
-                const updatedPhoto = await updatePhoto(currentPhoto.id, updates);
+                const updatedPhoto = await updatePhotoStar(currentPhoto.id, starValue);
                 setPhotos(photos.map(photo =>
                     photo.id === updatedPhoto.id ? updatedPhoto : photo
                 ));
             } else if (key === 'p') {
-                const updates: PhotoMetadataDTO = {
-                    pick: currentPhoto.pick === 1 ? 0 : 1
-                } as PhotoMetadataDTO;
-                const updatedPhoto = await updatePhoto(currentPhoto.id, updates);
+                const updatedPhoto = await updatePhotoPick(currentPhoto.id, currentPhoto.pick === 1 ? 0 : 1);
                 setPhotos(photos.map(photo =>
                     photo.id === updatedPhoto.id ? updatedPhoto : photo
                 ));
             } else if (key === 'x') {
-                const updates: PhotoMetadataDTO = {
-                    pick: currentPhoto.pick === -1 ? 0 : -1
-                } as PhotoMetadataDTO;
-                const updatedPhoto = await updatePhoto(currentPhoto.id, updates);
+                const updatedPhoto = await updatePhotoPick(currentPhoto.id, currentPhoto.pick === -1 ? 0 : -1);
                 setPhotos(photos.map(photo =>
                     photo.id === updatedPhoto.id ? updatedPhoto : photo
                 ));
@@ -467,7 +452,7 @@ export default function Dashboard() {
                                 }`}
                             >
                                 <Check className={`w-5 h-5 ${isSending ? 'animate-spin' : ''}`}/>
-                                {isSending ? 'Reading...' : 'Done'}
+                                {isSending ? 'Reading...' : 'Refresh'}
                             </button>
                         </div>
                         <button
@@ -547,7 +532,7 @@ export default function Dashboard() {
                                     <span className="text-gray-600">{photoStats.rejects} rejects</span>
                                 </div>
                                 <div className="flex items-center gap-2">
-                                    <span className="text-gray-600">{photoStats.noFlag} unflagged</span>
+                                    <span className={`${isOverLimitUnflag ? 'text-red-600 font-bold' : 'text-gray-600'}`}>{photoStats.noFlag} unflagged</span>
                                 </div>
                             </div>
                         </div>
