@@ -1,16 +1,18 @@
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {useLocation, useNavigate} from 'react-router-dom';
 import Slider from 'react-slick';
 import {
+    API_BASE_URL,
     fetchThumbnail,
     getPhotos,
-    getphotoshootNameFields,
     getPhotoshootTypes,
-    updatePhoto, updatePhotoPick,
-    updatephotoshootName, updatePhotoStar,
+    updatePhoto,
+    updatePhotoPick,
+    updatephotoshootName,
+    updatePhotoStar,
     validatephotoShoot
 } from '../api';
-import {Photo, PhotoMetadataDTO, PhotoshootType} from '../types';
+import {Photo, PhotoMetadataDTO, PhotoshootNameNewDTO, PhotoshootType} from '../types';
 import {
     AlertCircle,
     Calendar,
@@ -65,7 +67,8 @@ export default function Dashboard() {
     const [isSending, setIsSending] = useState(false);
     const [sliderKey, setSliderKey] = useState(0);
     const [sliderRef, setSliderRef] = useState<Slider | null>(null);
-    const [validationStatus, setValidationStatus] = useState<'loading' | 'validate' | 'invalid' | null>(null);
+    const [validationStatus, setValidationStatus] = useState<string>();
+    const [validFields, setValidFields] = useState<string[][]>([]);
     const [showphotoShootEditor, setShowphotoShootEditor] = useState(false);
     const [photoShootFields, setphotoShootFields] = useState<photoShootField[]>([]);
     const [selectedFieldValues, setSelectedFieldValues] = useState<Record<string, string>>({});
@@ -76,55 +79,117 @@ export default function Dashboard() {
 
     const navigate = useNavigate();
     const location = useLocation();
-//  const photoShootPath = location.state?.photoShootPath || 'Unknown photoShoot';
+
     const initialPhotoshootName = location.state?.photoshootName || 'Unknown photoShoot';
     const photoshootTypeName = location.state?.photoshootTypeName;
     const [thumbnailUrl, setThumbnailUrl] = useState<string | null>(null);
+
+    const fields: photoShootField[] = validFields.map((fieldList, i) => {
+        const [label, ...options] = fieldList;
+        return {
+            id: `field_${i + 1}`,
+            label: label ?? `Field ${i + 1}`, // fallback if label is missing
+            options
+        };
+    });
+    const photosRef = useRef<Photo[]>([]);
 
     useEffect(() => {
         setCurrentphotoshootName(initialPhotoshootName);
     }, [initialPhotoshootName]);
 
-    useEffect(() => {
-        const fetchData = async () => {
-            if (currentphotoshootName && currentphotoshootName !== 'Unknown photoShoot' && currentphotoshootName !== '.') {
-                setIsLoading(true);
-                setValidationStatus('loading');
-                try {
-                    const [photosList, types]: [Photo[], PhotoshootType[]] = await Promise.all([
-                        getPhotos(photoshootTypeName, currentphotoshootName),
-                        getPhotoshootTypes()
-                    ]);
-                    setPhotos(Array.isArray(photosList) ? photosList : []);
-                    const currentType = types.find(t => t.photoshootTypeEnum === photoshootTypeName);
-                    console.trace("photoshootTypeName", photoshootTypeName)
-                    console.trace("currentType", currentType)
-                    setPhotoshootType(currentType || null);
-                } catch (error) {
-                    console.error('Error fetching data:', error);
-                    setPhotos([]);
-                } finally {
-                    setIsLoading(false);
-                }
-                try {
-                    const result = await validatephotoShoot(photoshootTypeName,currentphotoshootName);
+    function validatePhotoshootWithStatus() {
+        if (validationStatus !== 'loading') {
+            setValidationStatus('loading');
+            validatephotoShoot(photoshootTypeName, currentphotoshootName)
+                .then((result) => {
                     setValidationStatus(result as 'validate' | 'invalid');
-                } catch (error) {
-                    console.error('Error validating photoShoot:', error);
+                })
+                .catch((err) => {
+                    console.error('Error validating photoShoot:', err);
                     setValidationStatus('invalid');
-                }
+                });
+        }
+    }
+
+    useEffect(() => {
+        if (!photoshootTypeName
+            || !currentphotoshootName
+            || currentphotoshootName === 'Unknown photoShoot'
+            || currentphotoshootName === '.'
+            || isLoading) {
+            return;
+        }
+
+        setValidationStatus('loading');
+        setIsLoading(true);
+        setPhotos([]);
+        photosRef.current = [];
+
+        // 1. STREAM PHOTOS via SSE
+        const eventSource = new EventSource(`${API_BASE_URL}/photoshoot/${photoshootTypeName}/${currentphotoshootName}/stream`);
+
+        eventSource.addEventListener("photo", (event) => {
+            const newPhoto = JSON.parse(event.data);
+            console.trace('SSE connection newPhoto:', newPhoto);
+            photosRef.current = [...photosRef.current, newPhoto];
+            // Update state
+            setPhotos([...photosRef.current]);
+        });
+
+        eventSource.addEventListener("photoshootStatus", (event) => {
+            const result = JSON.parse(event.data);
+            console.trace('SSE connection photoshootStatus:', result);
+            setValidationStatus(result.valid ? 'validate' : result.message);
+            setValidFields(result.validFields);
+        });
+
+        eventSource.addEventListener("photoDone", () => {
+            setIsLoading(false);
+        });
+
+        eventSource.addEventListener("endConnection", () => {
+            setIsLoading(false); // Stop loading event
+            if (validationStatus === 'loading') {
+                setValidationStatus('invalid');
             }
+            eventSource.close();
+        });
+
+        eventSource.onerror = (err) => {
+            console.error('SSE connection error:', err);
+            eventSource.close();
+            setIsLoading(false); // Stop loading even if SSE failed
+            setValidationStatus('invalid');
         };
-        fetchData();
-    }, [photoshootTypeName,currentphotoshootName]);
+
+        // 2. FETCH PHOTOSHOOT TYPES
+        getPhotoshootTypes()
+            .then((types) => {
+                const currentType = types.find(t => t.photoshootTypeEnum === photoshootTypeName);
+                console.trace("photoshootTypeName", photoshootTypeName);
+                console.trace("currentType", currentType);
+                setPhotoshootType(currentType || null);
+            })
+            .catch((err) => {
+                console.error('Error fetching types:', err);
+                setPhotoshootType(null);
+            });
+
+
+        // Cleanup on unmount or name change
+        return () => {
+            eventSource.close();
+        };
+    }, [currentphotoshootName]);
 
     const handleValidationIconClick = async () => {
-        if (validationStatus === 'invalid') {
+        if (validationStatus !== 'validate') {
+            console.log('handleValidationIconClick triggered');
             setIsLoadingFields(true);
             setShowphotoShootEditor(true);
             try {
-                const fieldsData = await getphotoshootNameFields(photoshootTypeName);
-                setphotoShootFields(fieldsData.fields);
+                setphotoShootFields(fields);
                 setSelectedFieldValues({});
             } catch (error) {
                 console.error('Error fetching photoShoot fields:', error);
@@ -133,6 +198,7 @@ export default function Dashboard() {
             }
         }
     };
+
 
     const handleFieldValueChange = (fieldId: string, value: string) => {
         setSelectedFieldValues(prev => ({
@@ -149,20 +215,31 @@ export default function Dashboard() {
             return;
         }
 
+        if (isLoading) {
+            alert('Loading photoShoot please wait');
+            return;
+        }
+
         const newphotoshootName = photoShootFields
             .map(field => selectedFieldValues[field.id])
             .join('_');
 
         setIsUpdatingName(true);
         try {
-            await updatephotoshootName(photoshootTypeName, currentphotoshootName, newphotoshootName);
+            const photoshootNameNewDTO: PhotoshootNameNewDTO = {
+                photoshootNameNew: newphotoshootName
+            };
+            await updatephotoshootName(photoshootTypeName, currentphotoshootName, photoshootNameNewDTO)
+                .then((result) => {
+                    if (result !== 'validate') {
+                        alert(result);
+                    }
+                });
             setCurrentphotoshootName(newphotoshootName);
             setShowphotoShootEditor(false);
             setSelectedFieldValues({});
             // Trigger validation check for the new name
-            setValidationStatus('loading');
-            const result = await validatephotoShoot(photoshootTypeName,newphotoshootName);
-            setValidationStatus(result as 'validate' | 'invalid');
+            validatePhotoshootWithStatus();
         } catch (error) {
             console.error('Error updating photoShoot name:', error);
             alert('Failed to update photoShoot name');
@@ -272,7 +349,7 @@ export default function Dashboard() {
         console.log("currentPhoto", currentPhoto.id)
         let isMounted = true;
         let objectUrl: string;
-        setIsLoading(true);
+//        setIsLoading(true);
         try {
             fetchThumbnail(currentPhoto.id).then((url) => {
                 if (isMounted) {
@@ -282,8 +359,8 @@ export default function Dashboard() {
             });
         } catch (error) {
             console.error('Error retieve thumbnail', error);
-        } finally {
-            setIsLoading(false);
+//        } finally {
+//            setIsLoading(false);
         }
 
         return () => {
@@ -318,9 +395,9 @@ export default function Dashboard() {
         setIsSending(true);
         try {
             const [photosList] = await Promise.all([
-                getPhotos(photoshootTypeName, currentphotoshootName,false)
+                getPhotos(photoshootTypeName, currentphotoshootName, false)
             ]);
-            alert('Photos have been successfully retrieve from the API');
+            //alert('Photos have been successfully retrieve from the API');
             setPhotos(Array.isArray(photosList) ? photosList : []);
         } catch (error) {
             console.error('Error sending photos:', error);
@@ -330,15 +407,18 @@ export default function Dashboard() {
         }
     };
 
-    const handleClickOutside = useCallback((e: React.MouseEvent) => {
-        const target = e.target as HTMLElement;
-        if (!target.closest('.context-menu') && !target.closest('.photoShoot-editor')) {
-            setContextMenu({x: 0, y: 0, photoId: null});
-            if (!isLoadingFields && !isUpdatingName) {
-                setShowphotoShootEditor(false);
-            }
-        }
-    }, [isLoadingFields, isUpdatingName]);
+    // const handleClickOutside = useCallback((e: React.MouseEvent) => {
+    //     const target = e.target as HTMLElement;
+    //     if (!target.closest('.context-menu') && !target.closest('.photoShoot-editor')) {
+    //         setContextMenu({x: 0, y: 0, photoId: null});
+    //         console.log('isLoadingFields-handleClickOutside=', isLoadingFields);
+    //         console.log('isUpdatingName-handleClickOutside=', isUpdatingName);
+    //         if (!isLoadingFields && !isUpdatingName) {
+    //             console.log('setShowphotoShootEditor(false)-handleClickOutside');
+    //             setShowphotoShootEditor(false);
+    //         }
+    //     }
+    // }, [isLoadingFields, isUpdatingName]);
 
     const handleKeyPress = useCallback(async (e: KeyboardEvent) => {
         console.trace("handleKeyPress")
@@ -412,16 +492,18 @@ export default function Dashboard() {
                 return <Loader className="w-6 h-6 text-blue-500 animate-spin"/>;
             case 'validate':
                 return <CheckCircle className="w-6 h-6 text-green-500"/>;
-            case 'invalid':
-                return (
-                    <XCircle
-                        className="w-6 h-6 text-red-500 cursor-pointer hover:text-red-700 transition-colors"
-                        onClick={handleValidationIconClick}
-                        //            title="Click to edit photoShoot name"
-                    />
-                );
             default:
-                return null;
+                return (
+                    <div
+                        title={`Validation status: \n${validationStatus}`}
+                        className="group"
+                    >
+                        <XCircle
+                            className="w-6 h-6 text-red-500 cursor-pointer hover:text-red-700 transition-colors"
+                            onClick={handleValidationIconClick}
+                        />
+                    </div>
+                );
         }
     };
 
@@ -439,7 +521,7 @@ export default function Dashboard() {
     };
 
     return (
-        <div className="min-h-screen bg-gray-100" onClick={handleClickOutside}>
+        <div className="min-h-screen bg-gray-100" >
             <nav className="bg-white shadow-md">
                 <div className="max-w-7xl mx-auto px-4">
                     <div className="flex justify-between h-16">
@@ -468,7 +550,8 @@ export default function Dashboard() {
 
             <div className="max-w-6xl mx-auto px-4 py-8">
                 <div className="bg-white rounded-lg shadow-lg p-6 mb-6">
-                    <div className="flex flex-col space-y-4">
+                    <div
+                        className={`flex flex-col space-y-4 ${isLoading ? 'pointer-events-none opacity-50' : ''}`}>
                         <div className="flex items-center gap-3">
                             {renderValidationIcon()}
                             <h2 className="text-2xl font-bold text-gray-800">{currentphotoshootName}</h2>
@@ -491,7 +574,8 @@ export default function Dashboard() {
 
                         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                             <div className="space-y-2">
-                                <h3 className="text-lg font-semibold text-gray-700">Star Ratings (Picked Photos)</h3>
+                                <h3 className="text-lg font-semibold text-gray-700">Star Ratings (Picked
+                                    Photos)</h3>
                                 {Object.entries(photoStats.stars).reverse().map(([stars, count]) => {
                                     const starLimit = starLimits?.find(limit => limit.stars === parseInt(stars));
                                     const isOverStarLimit = starLimit && count > starLimit.maxAllowed;
@@ -501,7 +585,8 @@ export default function Dashboard() {
                                              className={`flex items-center gap-2 ${isOverStarLimit ? 'bg-red-100 p-2 rounded-md' : ''}`}>
                                             <div className="flex">
                                                 {Array.from({length: parseInt(stars)}, (_, i) => (
-                                                    <Star key={i} className="w-4 h-4 text-yellow-500 fill-yellow-500"/>
+                                                    <Star key={i}
+                                                          className="w-4 h-4 text-yellow-500 fill-yellow-500"/>
                                                 ))}
                                             </div>
                                             <span
@@ -520,7 +605,8 @@ export default function Dashboard() {
                                 <div
                                     className={`flex items-center gap-2 ${isOverLimit ? 'bg-red-100 p-2 rounded-md' : ''}`}>
                                     <Flag className="w-4 h-4 text-white fill-current"/>
-                                    <span className={`${isOverLimit ? 'text-red-600 font-bold' : 'text-gray-600'}`}>
+                                    <span
+                                        className={`${isOverLimit ? 'text-red-600 font-bold' : 'text-gray-600'}`}>
                     {photoStats.picks} picks
                   </span>
                                     {isOverLimit && (
@@ -532,15 +618,18 @@ export default function Dashboard() {
                                     <span className="text-gray-600">{photoStats.rejects} rejects</span>
                                 </div>
                                 <div className="flex items-center gap-2">
-                                    <span className={`${isOverLimitUnflag ? 'text-red-600 font-bold' : 'text-gray-600'}`}>{photoStats.noFlag} unflagged</span>
+                                    <span
+                                        className={`${isOverLimitUnflag ? 'text-red-600 font-bold' : 'text-gray-600'}`}>{photoStats.noFlag} unflagged</span>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-
                 <div className="bg-white rounded-lg shadow-lg p-4 mb-6">
-                    <div className="flex items-center gap-4">
+                    <div
+                        className={`flex items-center gap-4 relative ${isLoading ? 'pointer-events-none opacity-50' : ''}`}>
+
+
                         <div className="flex items-center gap-2">
                             <Filter className="w-5 h-5 text-gray-600"/>
                             <span className="font-medium text-gray-700">Filters:</span>
@@ -583,11 +672,6 @@ export default function Dashboard() {
                     </div>
                 </div>
 
-                {isLoading && (
-                    <div className="fixed inset-0 bg-white bg-opacity-70 z-50 flex items-center justify-center">
-                        <div className="animate-spin rounded-full h-12 w-12 border-4 border-blue-500 border-t-transparent"></div>
-                    </div>
-                )}
                 <div className="bg-white rounded-lg shadow-lg p-6">
                     {filteredPhotos.length > 0 ? (
                         <Slider {...sliderSettings} key={sliderKey}>
@@ -603,7 +687,8 @@ export default function Dashboard() {
                                             className="content-center h-full object-cover rounded-lg mx-auto"
                                         />
                                         {photo.pick !== 0 && (
-                                            <div className="absolute top-2 right-2 flex items-center gap-2 bg-gray-300">
+                                            <div
+                                                className="absolute top-2 right-2 flex items-center gap-2 bg-gray-300">
                                                 <Flag
                                                     className={`w-5 h-5 ${photo.pick === 1 ? 'text-white' : 'text-black'}`}
                                                     fill="currentColor"
@@ -613,7 +698,8 @@ export default function Dashboard() {
                                         <div className="absolute top-2 left-2 flex gap-1">
                                             {renderStars(photo.rating)}
                                         </div>
-                                        <div className="absolute bottom-2 left-2 right-2 flex justify-center">
+                                        <div
+                                            className="absolute bottom-2 left-2 right-2 flex justify-center">
                                             <div
                                                 className="bg-black bg-opacity-50 text-white px-3 py-1 rounded-full text-sm">
                                                 {formatDate(photo.exifDate)}
@@ -633,8 +719,10 @@ export default function Dashboard() {
 
             {/* photoShoot Name Editor Modal */}
             {showphotoShootEditor && (
-                <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-                    <div className="bg-white rounded-lg shadow-xl p-6 w-full max-w-md mx-4 photoShoot-editor">
+                <div
+                    className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+                    <div
+                        className="bg-white rounded-lg shadow-xl p-6 w-full max-w-md mx-4 photoShoot-editor">
                         <div className="flex items-center justify-between mb-4">
                             <h3 className="text-lg font-semibold text-gray-800 flex items-center gap-2">
                                 <Edit3 className="w-5 h-5"/>
@@ -657,7 +745,8 @@ export default function Dashboard() {
                         ) : (
                             <div className="space-y-4">
                                 <div className="text-sm text-gray-600 mb-4">
-                                    Current name: <span className="font-medium">{currentphotoshootName}</span>
+                                    Current name: <span
+                                    className="font-medium">{currentphotoshootName}</span>
                                 </div>
 
                                 {photoShootFields.map((field) => (

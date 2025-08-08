@@ -38,6 +38,9 @@ export interface Photo {
   keywords: string[];
 }
 
+export interface PhotoshootNameNewDTO {
+  photoshootNameNew: string;
+}
 
 export interface PhotoMetadataDTO {
   rating: number;
