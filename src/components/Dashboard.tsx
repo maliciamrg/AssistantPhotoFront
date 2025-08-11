@@ -1,4 +1,5 @@
 import React, {useCallback, useEffect, useRef, useState} from 'react';
+import { PlayIcon } from '@heroicons/react/24/solid';
 import {useLocation, useNavigate} from 'react-router-dom';
 import Slider from 'react-slick';
 import {
@@ -93,6 +94,7 @@ export default function Dashboard() {
         };
     });
     const photosRef = useRef<Photo[]>([]);
+    const videoRef = useRef<HTMLVideoElement>(null);
 
     useEffect(() => {
         setCurrentphotoshootName(initialPhotoshootName);
@@ -520,6 +522,24 @@ export default function Dashboard() {
         ref: (slider: Slider) => setSliderRef(slider),
     };
 
+    function handleActionOpenInExplorer() {
+        if (filteredPhotos.length === 0 || showphotoShootEditor) return;
+
+        const currentPhoto = filteredPhotos[currentSlide];
+        if (!currentPhoto) return;
+        console.trace("currentPhoto", currentPhoto?.path);
+    }
+
+    const isVideo = (photo: Photo) => {
+        return photo.extension.toLowerCase() === 'mp4';
+    };
+
+    const handlePlay = () => {
+        if (videoRef.current) {
+            videoRef.current.play();
+        }
+    };
+
     return (
         <div className="min-h-screen bg-gray-100" >
             <nav className="bg-white shadow-md">
@@ -675,39 +695,48 @@ export default function Dashboard() {
                 <div className="bg-white rounded-lg shadow-lg p-6">
                     {filteredPhotos.length > 0 ? (
                         <Slider {...sliderSettings} key={sliderKey}>
-                            {filteredPhotos.map((photo) => (
-                                <div key={photo.id} className="px-4">
-                                    <div
-                                        onContextMenu={(e) => handleContextMenu(e, photo.id)}
-                                        className="relative aspect-video flex justify-center items-center bg-gray-300"
-                                    >
-                                        <img
-                                            src={thumbnailUrl || "/no_images.svg"}
-                                            alt="Photo"
-                                            className="content-center h-full object-cover rounded-lg mx-auto"
-                                        />
-                                        {photo.pick !== 0 && (
-                                            <div
-                                                className="absolute top-2 right-2 flex items-center gap-2 bg-gray-300">
-                                                <Flag
-                                                    className={`w-5 h-5 ${photo.pick === 1 ? 'text-white' : 'text-black'}`}
-                                                    fill="currentColor"
-                                                />
-                                            </div>
-                                        )}
-                                        <div className="absolute top-2 left-2 flex gap-1">
-                                            {renderStars(photo.rating)}
-                                        </div>
+                            {filteredPhotos.map((photo) => {
+                                const videoSrc = `${API_BASE_URL}/photo/${encodeURIComponent(filteredPhotos[currentSlide].id)}/videostream`;
+                                return (
+                                    <div key={photo.id} className="px-4">
                                         <div
-                                            className="absolute bottom-2 left-2 right-2 flex justify-center">
+                                            onContextMenu={(e) => handleContextMenu(e, photo.id)}
+                                            className="relative aspect-video flex justify-center items-center bg-gray-300"
+                                        >
+                                            {isVideo(photo) ? (
+                                                <div className="relative w-full h-full">
+                                                    <video src={videoSrc} controls className="w-full"/>
+                                                </div>
+                                            ) : (
+                                                <img
+                                                    src={thumbnailUrl || "/no_images.svg"}
+                                                    alt="Photo"
+                                                    className="content-center h-full object-cover rounded-lg mx-auto"
+                                                />
+                                            )}
+                                            {photo.pick !== 0 && (
+                                                <div
+                                                    className="absolute top-2 right-2 flex items-center gap-2 bg-gray-300">
+                                                    <Flag
+                                                        className={`w-5 h-5 ${photo.pick === 1 ? 'text-white' : 'text-black'}`}
+                                                        fill="currentColor"
+                                                    />
+                                                </div>
+                                            )}
+                                            <div className="absolute top-2 left-2 flex gap-1">
+                                                {renderStars(photo.rating)}
+                                            </div>
                                             <div
-                                                className="bg-black bg-opacity-50 text-white px-3 py-1 rounded-full text-sm">
-                                                {formatDate(photo.exifDate)}
+                                                className="absolute bottom-2 left-2 right-2 flex justify-center">
+                                                <div
+                                                    className="bg-black bg-opacity-50 text-white px-3 py-1 rounded-full text-sm">
+                                                    {formatDate(photo.exifDate)}
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                            ))}
+                                );
+                            })}
                         </Slider>
                     ) : (
                         <div className="text-center py-12">
@@ -816,6 +845,9 @@ export default function Dashboard() {
                     className="fixed bg-white rounded-lg shadow-lg py-2 w-48 context-menu"
                     style={{top: contextMenu.y, left: contextMenu.x}}
                 >
+                    <a href={`file://${filteredPhotos[currentSlide].path}`} target="_blank" rel="noopener noreferrer">
+                        Open in Explorer
+                    </a>
                     <button
                         onClick={() => handleAction(1, 99)}
                         className="w-full text-left px-4 py-2 hover:bg-gray-100"
