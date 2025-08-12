@@ -1,5 +1,4 @@
 import React, {useCallback, useEffect, useRef, useState} from 'react';
-import { PlayIcon } from '@heroicons/react/24/solid';
 import {useLocation, useNavigate} from 'react-router-dom';
 import Slider from 'react-slick';
 import {
@@ -11,7 +10,6 @@ import {
     updatePhotoPick,
     updatephotoshootName,
     updatePhotoStar,
-    validatephotoShoot
 } from '../api';
 import {Photo, PhotoMetadataDTO, PhotoshootNameNewDTO, PhotoshootType} from '../types';
 import {
@@ -68,11 +66,18 @@ export default function Dashboard() {
     const [isSending, setIsSending] = useState(false);
     const [sliderKey, setSliderKey] = useState(0);
     const [sliderRef, setSliderRef] = useState<Slider | null>(null);
+
     const [validationStatus, setValidationStatus] = useState<string>();
-    const [validFields, setValidFields] = useState<string[][]>([]);
+
     const [showphotoShootEditor, setShowphotoShootEditor] = useState(false);
+
+    const [validFields, setValidFields] = useState<string[][]>([]);
+    const [currentFields, setCurrentFields] = useState<string[]>([]);
+
     const [photoShootFields, setphotoShootFields] = useState<photoShootField[]>([]);
+
     const [selectedFieldValues, setSelectedFieldValues] = useState<Record<string, string>>({});
+
     const [isLoadingFields, setIsLoadingFields] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
     const [isUpdatingName, setIsUpdatingName] = useState(false);
@@ -93,26 +98,20 @@ export default function Dashboard() {
             options
         };
     });
+
+    const fieldsCurrent: Record<string, string> = currentFields.reduce(
+        (acc, fieldList, i) => {
+            acc[`field_${i + 1}`] = fieldList ?? '' ;
+            return acc;
+        },
+        {} as Record<string, string>
+    );
+
     const photosRef = useRef<Photo[]>([]);
-    const videoRef = useRef<HTMLVideoElement>(null);
 
     useEffect(() => {
         setCurrentphotoshootName(initialPhotoshootName);
     }, [initialPhotoshootName]);
-
-    function validatePhotoshootWithStatus() {
-        if (validationStatus !== 'loading') {
-            setValidationStatus('loading');
-            validatephotoShoot(photoshootTypeName, currentphotoshootName)
-                .then((result) => {
-                    setValidationStatus(result as 'validate' | 'invalid');
-                })
-                .catch((err) => {
-                    console.error('Error validating photoShoot:', err);
-                    setValidationStatus('invalid');
-                });
-        }
-    }
 
     useEffect(() => {
         if (!photoshootTypeName
@@ -144,6 +143,7 @@ export default function Dashboard() {
             console.trace('SSE connection photoshootStatus:', result);
             setValidationStatus(result.valid ? 'validate' : result.message);
             setValidFields(result.validFields);
+            setCurrentFields(result.currentFields);
         });
 
         eventSource.addEventListener("photoDone", () => {
@@ -192,7 +192,7 @@ export default function Dashboard() {
             setShowphotoShootEditor(true);
             try {
                 setphotoShootFields(fields);
-                setSelectedFieldValues({});
+                setSelectedFieldValues(fieldsCurrent);
             } catch (error) {
                 console.error('Error fetching photoShoot fields:', error);
             } finally {
@@ -233,15 +233,16 @@ export default function Dashboard() {
             };
             await updatephotoshootName(photoshootTypeName, currentphotoshootName, photoshootNameNewDTO)
                 .then((result) => {
-                    if (result !== 'validate') {
+                    if (result === 'validate') {
+                        setValidationStatus('validate');
+                        setCurrentphotoshootName(newphotoshootName);
+                    } else {
                         alert(result);
+                        setValidationStatus('invalid');
                     }
                 });
-            setCurrentphotoshootName(newphotoshootName);
             setShowphotoShootEditor(false);
             setSelectedFieldValues({});
-            // Trigger validation check for the new name
-            validatePhotoshootWithStatus();
         } catch (error) {
             console.error('Error updating photoShoot name:', error);
             alert('Failed to update photoShoot name');
@@ -351,7 +352,6 @@ export default function Dashboard() {
         console.log("currentPhoto", currentPhoto.id)
         let isMounted = true;
         let objectUrl: string;
-//        setIsLoading(true);
         try {
             fetchThumbnail(currentPhoto.id).then((url) => {
                 if (isMounted) {
@@ -361,8 +361,6 @@ export default function Dashboard() {
             });
         } catch (error) {
             console.error('Error retieve thumbnail', error);
-//        } finally {
-//            setIsLoading(false);
         }
 
         return () => {
@@ -408,19 +406,6 @@ export default function Dashboard() {
             setIsSending(false);
         }
     };
-
-    // const handleClickOutside = useCallback((e: React.MouseEvent) => {
-    //     const target = e.target as HTMLElement;
-    //     if (!target.closest('.context-menu') && !target.closest('.photoShoot-editor')) {
-    //         setContextMenu({x: 0, y: 0, photoId: null});
-    //         console.log('isLoadingFields-handleClickOutside=', isLoadingFields);
-    //         console.log('isUpdatingName-handleClickOutside=', isUpdatingName);
-    //         if (!isLoadingFields && !isUpdatingName) {
-    //             console.log('setShowphotoShootEditor(false)-handleClickOutside');
-    //             setShowphotoShootEditor(false);
-    //         }
-    //     }
-    // }, [isLoadingFields, isUpdatingName]);
 
     const handleKeyPress = useCallback(async (e: KeyboardEvent) => {
         console.trace("handleKeyPress")
@@ -522,22 +507,8 @@ export default function Dashboard() {
         ref: (slider: Slider) => setSliderRef(slider),
     };
 
-    function handleActionOpenInExplorer() {
-        if (filteredPhotos.length === 0 || showphotoShootEditor) return;
-
-        const currentPhoto = filteredPhotos[currentSlide];
-        if (!currentPhoto) return;
-        console.trace("currentPhoto", currentPhoto?.path);
-    }
-
     const isVideo = (photo: Photo) => {
         return photo.extension.toLowerCase() === 'mp4';
-    };
-
-    const handlePlay = () => {
-        if (videoRef.current) {
-            videoRef.current.play();
-        }
     };
 
     return (
@@ -792,7 +763,7 @@ export default function Dashboard() {
                                             <option value="">Select {field.label.toLowerCase()}</option>
                                             {field.options.map((option) => (
                                                 <option key={option} value={option}>
-                                                    {option}
+                                                {option}
                                                 </option>
                                             ))}
                                         </select>
