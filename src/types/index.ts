@@ -48,3 +48,23 @@ export interface PhotoMetadataDTO {
   label: string;
   keywords: string[];
 }
+
+export interface Tag {
+  id: string;
+  name: string;
+  parentId: string | null;
+}
+
+export interface TagEditorProps {
+  tags: Tag[];
+  onClose: () => void;
+  onUpdate: (
+      action: 'create' | 'update' | 'delete',
+      tag: Tag | Omit<Tag, 'id'>
+  ) => void;
+}
+
+
+export interface TagTreeNode extends Tag {
+  children: TagTreeNode[];
+}

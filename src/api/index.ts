@@ -1,4 +1,4 @@
-import {Photo, PhotoShoot, PhotoshootNameNewDTO, PhotoshootType} from "../types";
+import {Photo, PhotoShoot, PhotoshootNameNewDTO, PhotoshootType, Tag} from "../types";
 
 export const API_BASE_URL = 'http://localhost:8099/api';
 
@@ -1574,38 +1574,6 @@ export const validatephotoShoot = async (photoshootTypeName: string, photoshootN
     }
 };
 
-// Mock API call to get photoShoot name fields configuration
-// export const getphotoshootNameFields = async (PhotoshootType: string) => {
-//   // Simulate API delay
-//   await new Promise(resolve => setTimeout(resolve, 800));
-//
-//   // Mock response with random number of fields (2-4) and acceptable words
-//   const fieldCount = Math.floor(Math.random() * 3) + 2; // 2, 3, or 4 fields
-//
-//   const mockFieldOptions = [
-//     ['2023', '2024', '2025'],
-//     ['event', 'meeting', 'conference', 'workshop'],
-//     ['paris', 'london', 'berlin', 'madrid'],
-//     ['team', 'client', 'partner', 'internal'],
-//     ['morning', 'afternoon', 'evening'],
-//     ['indoor', 'outdoor', 'hybrid']
-//   ];
-//
-//   const fields = [];
-//   for (let i = 0; i < fieldCount; i++) {
-//     fields.push({
-//       id: `field_${i + 1}`,
-//       label: `Field ${i + 1}`,
-//       options: mockFieldOptions[i % mockFieldOptions.length]
-//     });
-//   }
-//
-//   return {
-//     fieldCount,
-//     fields
-//   };
-// };
-
 // Mock API call to update photoShoot name
 export const updatephotoshootName = async (
     photoshootTypeName: string, oldPhotoshootName: string,
@@ -1622,13 +1590,13 @@ export const updatephotoshootName = async (
         return 'validate';
     }
     try {
-        const response = await fetch(`${API_BASE_URL}/photoshoot/${photoshootTypeName}/${oldPhotoshootName}/rename`,{
-        method: 'PUT',
+        const response = await fetch(`${API_BASE_URL}/photoshoot/${photoshootTypeName}/${oldPhotoshootName}/rename`, {
+            method: 'PUT',
             headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(photoshootNameNewDTO),
-    });
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(photoshootNameNewDTO),
+        });
 
         const result = await response.json();
 
@@ -1662,3 +1630,48 @@ export const fetchThumbnail = async (photoUUID: string) => {
     const blob = await response.blob();
     return URL.createObjectURL(blob);
 }
+
+export const fetchTags = async (): Promise<Tag[]> => {
+    const response = await fetch(`${API_BASE_URL}/tags`);
+    if (!response.ok) {
+        throw new Error(`Failed to fetch tags: ${response.statusText}`);
+    }
+    const data = await response.json();
+    return data as Tag[];
+};
+
+export const createTag = async (tag: Omit<Tag, 'id'>): Promise<Tag> => {
+    const newTag: Tag = {id: "00000", name: tag.name, parentId: tag.parentId}
+    const response = await fetch(`${API_BASE_URL}/tags`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(newTag),
+    });
+    if (!response.ok) {
+        throw new Error(`Failed to fetch tags: ${response.statusText}`);
+    }
+    const result = await response.json();
+    return result as Tag;
+};
+
+export const updateTag = async (tag: Tag): Promise<Tag> => {
+    const response = await fetch(`${API_BASE_URL}/tags/${tag.id}/rename/${tag.name}`, {
+        method: 'PUT'
+    });
+    if (!response.ok) {
+        throw new Error(`Failed to fetch tags: ${response.statusText}`);
+    }
+    return tag as Tag;
+};
+
+export const deleteTag = async (tagId: string): Promise<void> => {
+    const response = await fetch(`${API_BASE_URL}/tags/${tagId}`, {
+        method: 'DELETE'
+    });
+    if (!response.ok) {
+        throw new Error(`Failed to fetch tags: ${response.statusText}`);
+    }
+};
+

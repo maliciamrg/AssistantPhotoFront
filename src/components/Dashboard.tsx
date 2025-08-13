@@ -3,6 +3,8 @@ import {useLocation, useNavigate} from 'react-router-dom';
 import Slider from 'react-slick';
 import {
     API_BASE_URL,
+    createTag,
+    deleteTag, fetchTags,
     fetchThumbnail,
     getPhotos,
     getPhotoshootTypes,
@@ -10,8 +12,9 @@ import {
     updatePhotoPick,
     updatephotoshootName,
     updatePhotoStar,
+    updateTag,
 } from '../api';
-import {Photo, PhotoMetadataDTO, PhotoshootNameNewDTO, PhotoshootType} from '../types';
+import {Photo, PhotoMetadataDTO, PhotoshootNameNewDTO, PhotoshootType, Tag} from '../types';
 import {
     AlertCircle,
     Calendar,
@@ -29,6 +32,7 @@ import {
 } from 'lucide-react';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import TagEditor from "./TagEditor.tsx";
 
 type FilterType = {
     stars: number | null;
@@ -70,6 +74,7 @@ export default function Dashboard() {
     const [validationStatus, setValidationStatus] = useState<string>();
 
     const [showphotoShootEditor, setShowphotoShootEditor] = useState(false);
+    const [isTagEditorOpen, setIsTagEditorOpen] = useState(false);
 
     const [validFields, setValidFields] = useState<string[][]>([]);
     const [currentFields, setCurrentFields] = useState<string[]>([]);
@@ -82,6 +87,8 @@ export default function Dashboard() {
     const [isLoading, setIsLoading] = useState(false);
     const [isUpdatingName, setIsUpdatingName] = useState(false);
     const [currentphotoshootName, setCurrentphotoshootName] = useState('');
+
+    const [tags, setTags] = useState<Tag[]>([]);
 
     const navigate = useNavigate();
     const location = useLocation();
@@ -101,7 +108,7 @@ export default function Dashboard() {
 
     const fieldsCurrent: Record<string, string> = currentFields.reduce(
         (acc, fieldList, i) => {
-            acc[`field_${i + 1}`] = fieldList ?? '' ;
+            acc[`field_${i + 1}`] = fieldList ?? '';
             return acc;
         },
         {} as Record<string, string>
@@ -183,7 +190,7 @@ export default function Dashboard() {
         return () => {
             eventSource.close();
         };
-    }, [currentphotoshootName]);
+    }, [currentphotoshootName, isTagEditorOpen]);
 
     const handleValidationIconClick = async () => {
         if (validationStatus !== 'validate') {
@@ -346,6 +353,12 @@ export default function Dashboard() {
     };
 
     useEffect(() => {
+        fetchTags().then(setTags).catch(err => {
+            console.error('Failed to fetch tags', err);
+        });
+    }, []);
+
+    useEffect(() => {
         console.log("fetchThumbnail?")
         if (filteredPhotos.length === 0 || showphotoShootEditor) return;
         const currentPhoto = filteredPhotos[currentSlide];
@@ -369,6 +382,16 @@ export default function Dashboard() {
         };
     }, [filteredPhotos[currentSlide]?.id]);
 
+    useEffect(() => {
+        const handleEscape = (event: KeyboardEvent) => {
+            if (event.key === "Escape") {
+                setIsTagEditorOpen(false);
+                setContextMenu({x: 0, y: 0, photoId: null});
+            }
+        };
+        document.addEventListener("keydown", handleEscape);
+        return () => document.removeEventListener("keydown", handleEscape);
+    }, []);
 
     const handleAction = async (pick: number, star: number) => {
         if (contextMenu.photoId) {
@@ -406,6 +429,13 @@ export default function Dashboard() {
             setIsSending(false);
         }
     };
+
+    const handleClickOutside = useCallback((e: React.MouseEvent) => {
+        const target = e.target as HTMLElement;
+        if (!target.closest('.context-menu')) {
+            setContextMenu({x: 0, y: 0, photoId: null});
+        }
+    }, [isUpdatingName]);
 
     const handleKeyPress = useCallback(async (e: KeyboardEvent) => {
         console.trace("handleKeyPress")
@@ -511,8 +541,46 @@ export default function Dashboard() {
         return photo.extension.toLowerCase() === 'mp4';
     };
 
+    const handleUpdate = async (
+        action: 'create' | 'update' | 'delete',
+        tag: Tag | Omit<Tag, 'id'>
+    ) => {
+        try {
+            if (action === 'create') {
+                const created = await createTag(tag as Omit<Tag, 'id'>);
+                setTags(prev => [...prev, created]);
+            } else if (action === 'update') {
+                const updated = await updateTag(tag as Tag);
+                setTags(prev => prev.map(t => (t.id === updated.id ? updated : t)));
+            } else  if (action === 'delete') {
+                const tagToDelete = tag as Tag;
+                await deleteTag(tagToDelete.id);
+                const toDelete = getAllDescendants(tags, tagToDelete.id);
+                setTags(prev =>
+                    prev.filter(
+                        t => t.id !== tagToDelete.id && !toDelete.includes(t.id)
+                    )
+                );
+            }
+        } catch (err) {
+            console.error('Tag update failed:', err);
+        }
+    };
+
+    const getAllDescendants = (tags: Tag[], parentId: string): string[] => {
+        const childIds = tags
+            .filter(tag => tag.parentId === parentId)
+            .map(tag => tag.id);
+
+        const descendantIds = childIds.flatMap(childId =>
+            getAllDescendants(tags, childId)
+        );
+
+        return [...childIds, ...descendantIds];
+    };
+
     return (
-        <div className="min-h-screen bg-gray-100" >
+        <div className="min-h-screen bg-gray-100" onClick={handleClickOutside}>
             <nav className="bg-white shadow-md">
                 <div className="max-w-7xl mx-auto px-4">
                     <div className="flex justify-between h-16">
@@ -526,6 +594,14 @@ export default function Dashboard() {
                             >
                                 <Check className={`w-5 h-5 ${isSending ? 'animate-spin' : ''}`}/>
                                 {isSending ? 'Reading...' : 'Refresh'}
+                            </button>
+                            <button
+                                className={`px-4 py-2 text-gray-700 hover:text-gray-900 flex items-center gap-2 ${
+                                    isSending ? 'opacity-50 cursor-not-allowed' : ''
+                                }`}
+                                onClick={() => setIsTagEditorOpen(true)}
+                            >
+                                Edit Tags
                             </button>
                         </div>
                         <button
@@ -763,7 +839,7 @@ export default function Dashboard() {
                                             <option value="">Select {field.label.toLowerCase()}</option>
                                             {field.options.map((option) => (
                                                 <option key={option} value={option}>
-                                                {option}
+                                                    {option}
                                                 </option>
                                             ))}
                                         </select>
@@ -811,14 +887,30 @@ export default function Dashboard() {
                 </div>
             )}
 
+            <div>
+                {isTagEditorOpen && (
+                    <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex justify-center items-center">
+                        <div className="bg-white rounded-lg shadow-lg w-[600px] max-h-[80vh] overflow-y-auto p-6">
+                            <h2 className="text-xl font-semibold mb-4">Tag Editor</h2>
+                            <TagEditor
+                                tags={tags}
+                                onClose={() => {
+                                    setIsTagEditorOpen(false);
+                                    fetchTags();
+                                    renderValidationIcon();
+                                }}
+                                onUpdate={handleUpdate}
+                            />
+                        </div>
+                    </div>
+                )}
+            </div>
+
             {contextMenu.photoId && (
                 <div
                     className="fixed bg-white rounded-lg shadow-lg py-2 w-48 context-menu"
                     style={{top: contextMenu.y, left: contextMenu.x}}
                 >
-                    <a href={`file://${filteredPhotos[currentSlide].path}`} target="_blank" rel="noopener noreferrer">
-                        Open in Explorer
-                    </a>
                     <button
                         onClick={() => handleAction(1, 99)}
                         className="w-full text-left px-4 py-2 hover:bg-gray-100"
