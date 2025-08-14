@@ -765,6 +765,7 @@ export default function Dashboard() {
                                                     className="content-center h-full object-cover rounded-lg mx-auto"
                                                 />
                                             )}
+                                            {/* Pick Flag */}
                                             {photo.pick !== 0 && (
                                                 <div
                                                     className="absolute top-2 right-2 flex items-center gap-2 bg-gray-300">
@@ -774,9 +775,11 @@ export default function Dashboard() {
                                                     />
                                                 </div>
                                             )}
+                                            {/* Rating */}
                                             <div className="absolute top-2 left-2 flex gap-1">
                                                 {renderStars(photo.rating)}
                                             </div>
+                                            {/* Date */}
                                             <div
                                                 className="absolute bottom-2 left-2 right-2 flex justify-center">
                                                 <div
@@ -784,6 +787,20 @@ export default function Dashboard() {
                                                     {formatDate(photo.exifDate)}
                                                 </div>
                                             </div>
+                                            {/*Tags*/}
+                                            {photo.keywords?.length > 0 && (
+                                                <div className="absolute bottom-2 right-2 flex flex-wrap justify-end gap-1">
+                                                    {photo.keywords.map((keyword) => (
+                                                        <div
+                                                            key={keyword}
+                                                            className="bg-black bg-opacity-50 text-white text-xs px-2 py-1 rounded-full whitespace-nowrap"
+                                                            title={keyword}
+                                                        >
+                                                            {keyword}
+                                                        </div>
+                                                    ))}
+                                                </div>
+                                            )}
                                         </div>
                                     </div>
                                 );
