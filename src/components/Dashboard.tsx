@@ -22,7 +22,7 @@ import {
     CheckCircle,
     Edit3,
     Filter,
-    Flag,
+    Flag, FolderTree,
     Image,
     Loader,
     LogOut,
@@ -93,8 +93,8 @@ export default function Dashboard() {
     const navigate = useNavigate();
     const location = useLocation();
 
-    const initialPhotoshootName = location.state?.photoshootName || 'Unknown photoShoot';
-    const photoshootTypeName = location.state?.photoshootTypeName;
+    const startUpPhotoshootName = location.state?.photoshootName || 'Unknown photoShoot';
+    const startUpPhotoshootTypeName = location.state?.photoshootTypeName;
     const [thumbnailUrl, setThumbnailUrl] = useState<string | null>(null);
 
     const fields: photoShootField[] = validFields.map((fieldList, i) => {
@@ -117,11 +117,11 @@ export default function Dashboard() {
     const photosRef = useRef<Photo[]>([]);
 
     useEffect(() => {
-        setCurrentphotoshootName(initialPhotoshootName);
-    }, [initialPhotoshootName]);
+        setCurrentphotoshootName(startUpPhotoshootName);
+    }, [startUpPhotoshootName]);
 
     useEffect(() => {
-        if (!photoshootTypeName
+        if (!startUpPhotoshootTypeName
             || !currentphotoshootName
             || currentphotoshootName === 'Unknown photoShoot'
             || currentphotoshootName === '.'
@@ -135,7 +135,7 @@ export default function Dashboard() {
         photosRef.current = [];
 
         // 1. STREAM PHOTOS via SSE
-        const eventSource = new EventSource(`${API_BASE_URL}/photoshoot/${photoshootTypeName}/${currentphotoshootName}/stream`);
+        const eventSource = new EventSource(`${API_BASE_URL}/photoshoot/${startUpPhotoshootTypeName}/${currentphotoshootName}/stream`);
 
         eventSource.addEventListener("photo", (event) => {
             const newPhoto = JSON.parse(event.data);
@@ -175,8 +175,8 @@ export default function Dashboard() {
         // 2. FETCH PHOTOSHOOT TYPES
         getPhotoshootTypes()
             .then((types) => {
-                const currentType = types.find(t => t.photoshootTypeEnum === photoshootTypeName);
-                console.trace("photoshootTypeName", photoshootTypeName);
+                const currentType = types.find(t => t.photoshootTypeEnum === startUpPhotoshootTypeName);
+                console.trace("photoshootTypeName", startUpPhotoshootTypeName);
                 console.trace("currentType", currentType);
                 setPhotoshootType(currentType || null);
             })
@@ -238,7 +238,7 @@ export default function Dashboard() {
             const photoshootNameNewDTO: PhotoshootNameNewDTO = {
                 photoshootNameNew: newphotoshootName
             };
-            await updatephotoshootName(photoshootTypeName, currentphotoshootName, photoshootNameNewDTO)
+            await updatephotoshootName(startUpPhotoshootTypeName, currentphotoshootName, photoshootNameNewDTO)
                 .then((result) => {
                     if (result === 'validate') {
                         setValidationStatus('validate');
@@ -418,7 +418,7 @@ export default function Dashboard() {
         setIsSending(true);
         try {
             const [photosList] = await Promise.all([
-                getPhotos(photoshootTypeName, currentphotoshootName, false)
+                getPhotos(startUpPhotoshootTypeName, currentphotoshootName, false)
             ]);
             //alert('Photos have been successfully retrieve from the API');
             setPhotos(Array.isArray(photosList) ? photosList : []);
@@ -625,6 +625,10 @@ export default function Dashboard() {
                         </div>
 
                         <div className="flex items-center gap-6 bg-gray-50 p-3 rounded-lg">
+                            <div className="flex items-center gap-2 text-gray-600">
+                                <FolderTree className="w-5 h-5"/>
+                                <span className="font-medium">{startUpPhotoshootTypeName}</span>
+                            </div>
                             {dateRange && (
                                 <div className="flex items-center gap-2 text-gray-600">
                                     <Calendar className="w-5 h-5"/>

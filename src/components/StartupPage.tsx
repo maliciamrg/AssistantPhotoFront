@@ -50,7 +50,6 @@ export default function StartupPage() {
       const selectedphotoShootData = photoShoots.find(r => r.name === selectedphotoShoot);
       navigate('/dashboard', { 
         state: {
-          photoShootPath: selectedphotoShootData?.path || 'Unknown photoShoot',
           photoshootName: selectedphotoShootData?.name || selectedphotoShootData?.name ||'Unknown photoShoot',
           photoshootTypeName: selectedType // Add the photoshootTypeName to the navigation state
         }
