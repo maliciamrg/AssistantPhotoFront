@@ -19,6 +19,12 @@ export interface PhotoShoot {
   description: string | null;
   metaDataFromPhotoshoot: any | null;
   groupOfPhoto: any | null;
+  validationResult: {
+    currentFields: string[] | null;
+    validFields: any | null;
+    message: string;
+    valid: boolean;
+  };
 }
 
 
@@ -67,4 +73,11 @@ export interface TagEditorProps {
 
 export interface TagTreeNode extends Tag {
   children: TagTreeNode[];
+}
+
+export interface PhotoShootOption {
+  value: string;
+  label: string;
+  valid: boolean;
+  message?: string;
 }

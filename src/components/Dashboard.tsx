@@ -14,7 +14,7 @@ import {
     updatePhotoStar,
     updateTag,
 } from '../api';
-import {Photo, PhotoMetadataDTO, PhotoshootNameNewDTO, PhotoshootType, Tag} from '../types';
+import {Photo, PhotoMetadataDTO, PhotoshootNameNewDTO, PhotoshootType, Tag, PhotoShootOption} from '../types';
 import {
     AlertCircle,
     Calendar,
@@ -58,6 +58,15 @@ const formatDate = (dateString: string) => {
 };
 
 export default function Dashboard() {
+
+    const navigate = useNavigate();
+    const location = useLocation();
+
+    const startUpPhotoshootIndex = location.state?.photoshootIndex;
+    const startUpPhotoshootTypeName = location.state?.photoshootTypeName;
+    const startUpPhotoShootList: PhotoShootOption[] = location.state?.photoShootList;
+
+
     const [photos, setPhotos] = useState<Photo[]>([]);
     const [PhotoshootType, setPhotoshootType] = useState<PhotoshootType | null>(null);
     const [currentSlide, setCurrentSlide] = useState(0);
@@ -90,12 +99,9 @@ export default function Dashboard() {
 
     const [tags, setTags] = useState<Tag[]>([]);
 
-    const navigate = useNavigate();
-    const location = useLocation();
-
-    const startUpPhotoshootName = location.state?.photoshootName || 'Unknown photoShoot';
-    const startUpPhotoshootTypeName = location.state?.photoshootTypeName;
     const [thumbnailUrl, setThumbnailUrl] = useState<string | null>(null);
+
+    const [currentIndex, setCurrentIndex] = useState<number>(startUpPhotoshootIndex);
 
     const fields: photoShootField[] = validFields.map((fieldList, i) => {
         const [label, ...options] = fieldList;
@@ -117,8 +123,8 @@ export default function Dashboard() {
     const photosRef = useRef<Photo[]>([]);
 
     useEffect(() => {
-        setCurrentphotoshootName(startUpPhotoshootName);
-    }, [startUpPhotoshootName]);
+        setCurrentphotoshootName(startUpPhotoShootList[currentIndex].value);
+    }, [currentIndex]);
 
     useEffect(() => {
         if (!startUpPhotoshootTypeName
@@ -135,7 +141,9 @@ export default function Dashboard() {
         photosRef.current = [];
 
         // 1. STREAM PHOTOS via SSE
-        const eventSource = new EventSource(`${API_BASE_URL}/photoshoot/${startUpPhotoshootTypeName}/${currentphotoshootName}/stream`);
+        const streamUrl = `${API_BASE_URL}/photoshoot/${startUpPhotoshootTypeName}/${currentphotoshootName}/stream`;
+        console.log("Connecting to SSE stream:", streamUrl);
+        const eventSource = new EventSource(streamUrl);
 
         eventSource.addEventListener("photo", (event) => {
             const newPhoto = JSON.parse(event.data);
@@ -151,10 +159,6 @@ export default function Dashboard() {
             setValidationStatus(result.valid ? 'validate' : result.message);
             setValidFields(result.validFields);
             setCurrentFields(result.currentFields);
-        });
-
-        eventSource.addEventListener("photoDone", () => {
-            setIsLoading(false);
         });
 
         eventSource.addEventListener("endConnection", () => {
@@ -175,9 +179,7 @@ export default function Dashboard() {
         // 2. FETCH PHOTOSHOOT TYPES
         getPhotoshootTypes()
             .then((types) => {
-                const currentType = types.find(t => t.photoshootTypeEnum === startUpPhotoshootTypeName);
-                console.trace("photoshootTypeName", startUpPhotoshootTypeName);
-                console.trace("currentType", currentType);
+                const currentType = types.find((t: PhotoshootType) => t.photoshootTypeEnum === startUpPhotoshootTypeName);
                 setPhotoshootType(currentType || null);
             })
             .catch((err) => {
@@ -190,11 +192,10 @@ export default function Dashboard() {
         return () => {
             eventSource.close();
         };
-    }, [currentphotoshootName, isTagEditorOpen]);
+    }, [currentphotoshootName]);
 
     const handleValidationIconClick = async () => {
         if (validationStatus !== 'validate') {
-            console.log('handleValidationIconClick triggered');
             setIsLoadingFields(true);
             setShowphotoShootEditor(true);
             try {
@@ -359,10 +360,8 @@ export default function Dashboard() {
     }, []);
 
     useEffect(() => {
-        console.log("fetchThumbnail?")
         if (filteredPhotos.length === 0 || showphotoShootEditor) return;
         const currentPhoto = filteredPhotos[currentSlide];
-        console.log("currentPhoto", currentPhoto.id)
         let isMounted = true;
         let objectUrl: string;
         try {
@@ -438,15 +437,12 @@ export default function Dashboard() {
     }, [isUpdatingName]);
 
     const handleKeyPress = useCallback(async (e: KeyboardEvent) => {
-        console.trace("handleKeyPress")
         if (filteredPhotos.length === 0 || showphotoShootEditor) return;
 
         const currentPhoto = filteredPhotos[currentSlide];
         if (!currentPhoto) return;
-        console.trace("currentPhoto", currentPhoto?.id);
 
         const key = e.key.toLowerCase();
-        console.trace("key", key);
 
         try {
             if (['0', '1', '2', '3', '4', '5'].includes(key)) {
@@ -474,10 +470,21 @@ export default function Dashboard() {
     const handleKeyDown = useCallback((e: KeyboardEvent) => {
         if (!sliderRef || showphotoShootEditor) return;
 
-        if (e.key === 'ArrowLeft') {
-            sliderRef.slickPrev();
-        } else if (e.key === 'ArrowRight') {
-            sliderRef.slickNext();
+        switch (e.key) {
+            case 'ArrowLeft':
+                sliderRef.slickPrev();
+                break;
+            case 'ArrowRight':
+                sliderRef.slickNext();
+                break;
+            case 'PageDown':
+                handlePrevious();
+                break;
+            case 'PageUp':
+                handleNext();
+                break;
+            default:
+                break;
         }
     }, [sliderRef, showphotoShootEditor]);
 
@@ -579,6 +586,14 @@ export default function Dashboard() {
         return [...childIds, ...descendantIds];
     };
 
+    const handlePrevious = () => {
+        setCurrentIndex((prev) => Math.max(prev - 1, 0));
+    };
+
+    const handleNext = () => {
+        setCurrentIndex((prev) => Math.min(prev + 1, startUpPhotoShootList.length - 1));
+    };
+
     return (
         <div className="min-h-screen bg-gray-100" onClick={handleClickOutside}>
             <nav className="bg-white shadow-md">
@@ -620,8 +635,27 @@ export default function Dashboard() {
                     <div
                         className={`flex flex-col space-y-4 ${isLoading ? 'pointer-events-none opacity-50' : ''}`}>
                         <div className="flex items-center gap-3">
+                            <button
+                                onClick={handlePrevious}
+                                disabled={currentIndex === 0}
+                                className="text-2xl px-2 disabled:opacity-50"
+                            >
+                                ←
+                            </button>
+
                             {renderValidationIcon()}
-                            <h2 className="text-2xl font-bold text-gray-800">{currentphotoshootName}</h2>
+
+                            <h2 className="text-2xl font-bold text-gray-800">
+                                {currentphotoshootName}
+                            </h2>
+
+                            <button
+                                onClick={handleNext}
+                                disabled={currentIndex === startUpPhotoShootList.length - 1}
+                                className="text-2xl px-2 disabled:opacity-50"
+                            >
+                                →
+                            </button>
                         </div>
 
                         <div className="flex items-center gap-6 bg-gray-50 p-3 rounded-lg">
@@ -631,7 +665,7 @@ export default function Dashboard() {
                             </div>
                             {dateRange && (
                                 <div className="flex items-center gap-2 text-gray-600">
-                                    <Calendar className="w-5 h-5"/>
+                                <Calendar className="w-5 h-5"/>
                                     <span className="font-medium">{dateRange.diffDays} days</span>
                                 </div>
                             )}
