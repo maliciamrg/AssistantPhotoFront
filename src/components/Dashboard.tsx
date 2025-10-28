@@ -4,7 +4,8 @@ import Slider from 'react-slick';
 import {
     API_BASE_URL,
     createTag,
-    deleteTag, fetchTags,
+    deleteTag,
+    fetchTags,
     fetchThumbnail,
     getPhotos,
     getPhotoshootTypes,
@@ -14,7 +15,7 @@ import {
     updatePhotoStar,
     updateTag,
 } from '../api';
-import {Photo, PhotoMetadataDTO, PhotoshootNameNewDTO, PhotoshootType, Tag, PhotoShootOption} from '../types';
+import {Photo, PhotoMetadataDTO, PhotoshootNameNewDTO, PhotoShootOption, PhotoshootType, Tag} from '../types';
 import {
     AlertCircle,
     Calendar,
@@ -22,7 +23,8 @@ import {
     CheckCircle,
     Edit3,
     Filter,
-    Flag, FolderTree,
+    Flag,
+    FolderTree,
     Image,
     Loader,
     LogOut,
@@ -262,11 +264,13 @@ export default function Dashboard() {
     const calculateDateRange = () => {
         if (photos.length === 0) return null;
 
-        const dates = photos.map(photo => new Date(photo.exifDate));
+        const dates = photos
+            .filter(photo => photo.pick !== -1)
+            .map(photo => new Date(photo.takenDate));
         const minDate = new Date(Math.min(...dates.map(d => d.getTime())));
         const maxDate = new Date(Math.max(...dates.map(d => d.getTime())));
 
-        const diffTime = Math.abs(maxDate.getTime() - minDate.getTime());
+        const diffTime = Math.abs(maxDate.getTime() - minDate.getTime()) + 1000;
         const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
 
         return {
@@ -559,7 +563,7 @@ export default function Dashboard() {
             } else if (action === 'update') {
                 const updated = await updateTag(tag as Tag);
                 setTags(prev => prev.map(t => (t.id === updated.id ? updated : t)));
-            } else  if (action === 'delete') {
+            } else if (action === 'delete') {
                 const tagToDelete = tag as Tag;
                 await deleteTag(tagToDelete.id);
                 const toDelete = getAllDescendants(tags, tagToDelete.id);
@@ -665,7 +669,7 @@ export default function Dashboard() {
                             </div>
                             {dateRange && (
                                 <div className="flex items-center gap-2 text-gray-600">
-                                <Calendar className="w-5 h-5"/>
+                                    <Calendar className="w-5 h-5"/>
                                     <span className="font-medium">{dateRange.diffDays} days</span>
                                 </div>
                             )}
@@ -818,12 +822,13 @@ export default function Dashboard() {
                                                 className="absolute bottom-2 left-2 right-2 flex justify-center">
                                                 <div
                                                     className="bg-black bg-opacity-50 text-white px-3 py-1 rounded-full text-sm">
-                                                    {formatDate(photo.exifDate)}
+                                                    {formatDate(photo.takenDate)}
                                                 </div>
                                             </div>
                                             {/*Tags*/}
                                             {photo.keywords?.length > 0 && (
-                                                <div className="absolute bottom-2 right-2 flex flex-wrap justify-end gap-1">
+                                                <div
+                                                    className="absolute bottom-2 right-2 flex flex-wrap justify-end gap-1">
                                                     {photo.keywords.map((keyword) => (
                                                         <div
                                                             key={keyword}
@@ -835,6 +840,15 @@ export default function Dashboard() {
                                                     ))}
                                                 </div>
                                             )}
+                                            {/*Size*/}
+                                            <div className="absolute bottom-2 left-2 flex flex-wrap justify-end gap-1">
+                                                <div
+                                                    className="bg-black bg-opacity-50 text-white text-xs px-2 py-1 rounded-full whitespace-nowrap">
+                                                    {photo.sizeMB} MB
+                                                </div>
+
+                                            </div>
+
                                         </div>
                                     </div>
                                 );

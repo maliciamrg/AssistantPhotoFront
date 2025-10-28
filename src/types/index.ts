@@ -35,8 +35,8 @@ export interface Photo {
   relativeToPath: string;
   filename: string;
   extension: string;
-  createdDate: string; // ISO date string (e.g., "2025-03-27 17:12:48")
-  exifDate: string;    // ISO date string (e.g., "2021-08-31 15:17:47")
+  sizeMB: number;
+  takenDate: string; // ISO date string (e.g., "2025-03-27 17:12:48")
   createDate: string | null;
   rating: number;
   label: string | null;

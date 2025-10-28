@@ -175,938 +175,1072 @@ const MOCK_SEANCE_photoShoot: PhotoShoot[] = [
         "path": "/Photo/50-Phototheque/##Events 10-15 j/2021-04-17_anniversaire_antony_colette",
         "description": null,
         "metaDataFromPhotoshoot": null,
-        "groupOfPhoto": null
+        "groupOfPhoto": null,
+        "validationResult": {     currentFields: null,     validFields: "any",     message: "string",     valid: false }
     },
     {
         "name": "2023-07-16_spectacle_rockenseine_concert",
         "path": "/Photo/50-Phototheque/##Events 10-15 j/2023-07-16_spectacle_rockenseine_concert",
         "description": null,
         "metaDataFromPhotoshoot": null,
-        "groupOfPhoto": null
+        "groupOfPhoto": null,
+        "validationResult": {     currentFields: null,     validFields: "any",     message: "string",     valid: false }
     },
     {
         "name": "2019-12-11_anniversaire_antony_miya",
         "path": "/Photo/50-Phototheque/##Events 10-15 j/2019-12-11_anniversaire_antony_miya",
         "description": null,
         "metaDataFromPhotoshoot": null,
-        "groupOfPhoto": null
+        "groupOfPhoto": null,
+        "validationResult": {     currentFields: null,     validFields: "any",     message: "string",     valid: false }
     },
     {
         "name": "2021-04-04_paques_antony_enfants",
         "path": "/Photo/50-Phototheque/##Events 10-15 j/2021-04-04_paques_antony_enfants",
         "description": null,
         "metaDataFromPhotoshoot": null,
-        "groupOfPhoto": null
+        "groupOfPhoto": null,
+        "validationResult": {     currentFields: null,     validFields: "any",     message: "string",     valid: false }
     },
     {
         "name": "parc anonty",
         "path": "/Photo/50-Phototheque/##Events 10-15 j/parc anonty",
         "description": null,
         "metaDataFromPhotoshoot": null,
-        "groupOfPhoto": null
+        "groupOfPhoto": null,
+        "validationResult": {     currentFields: null,     validFields: "any",     message: "string",     valid: false }
     },
     {
         "name": "2020-12-15_sapin_antony",
         "path": "/Photo/50-Phototheque/##Events 10-15 j/2020-12-15_sapin_antony",
         "description": null,
         "metaDataFromPhotoshoot": null,
-        "groupOfPhoto": null
+        "groupOfPhoto": null,
+        "validationResult": {     currentFields: null,     validFields: "any",     message: "string",     valid: false }
     },
     {
         "name": "2024-07-24_passege_flamme",
         "path": "/Photo/50-Phototheque/##Events 10-15 j/2024-07-24_passege_flamme",
         "description": null,
         "metaDataFromPhotoshoot": null,
-        "groupOfPhoto": null
+        "groupOfPhoto": null,
+        "validationResult": {     currentFields: null,     validFields: "any",     message: "string",     valid: false }
     },
     {
         "name": "bateau meaux",
         "path": "/Photo/50-Phototheque/##Events 10-15 j/bateau meaux",
         "description": null,
         "metaDataFromPhotoshoot": null,
-        "groupOfPhoto": null
+        "groupOfPhoto": null,
+        "validationResult": {     currentFields: null,     validFields: "any",     message: "string",     valid: false }
     },
     {
         "name": "2018-10-14_sortie_provins_rapace",
         "path": "/Photo/50-Phototheque/##Events 10-15 j/2018-10-14_sortie_provins_rapace",
         "description": null,
         "metaDataFromPhotoshoot": null,
-        "groupOfPhoto": null
+        "groupOfPhoto": null,
+        "validationResult": {     currentFields: null,     validFields: "any",     message: "string",     valid: false }
     },
     {
         "name": "2018-01-13_anniversaire_paris_virginie",
         "path": "/Photo/50-Phototheque/##Events 10-15 j/2018-01-13_anniversaire_paris_virginie",
         "description": null,
         "metaDataFromPhotoshoot": null,
-        "groupOfPhoto": null
+        "groupOfPhoto": null,
+        "validationResult": {     currentFields: null,     validFields: "any",     message: "string",     valid: false }
     },
     {
         "name": "2019-03-26_week-end_brussel_sandrine",
         "path": "/Photo/50-Phototheque/##Events 10-15 j/2019-03-26_week-end_brussel_sandrine",
         "description": null,
         "metaDataFromPhotoshoot": null,
-        "groupOfPhoto": null
+        "groupOfPhoto": null,
+        "validationResult": {     currentFields: null,     validFields: "any",     message: "string",     valid: false }
     },
     {
         "name": "2018-04-01_paques_chatillion_kevorian",
         "path": "/Photo/50-Phototheque/##Events 10-15 j/2018-04-01_paques_chatillion_kevorian",
         "description": null,
         "metaDataFromPhotoshoot": null,
-        "groupOfPhoto": null
+        "groupOfPhoto": null,
+        "validationResult": {     currentFields: null,     validFields: "any",     message: "string",     valid: false }
     },
     {
         "name": "2019-12-31_nouvel an_clamart_laure",
         "path": "/Photo/50-Phototheque/##Events 10-15 j/2019-12-31_nouvel an_clamart_laure",
         "description": null,
         "metaDataFromPhotoshoot": null,
-        "groupOfPhoto": null
+        "groupOfPhoto": null,
+        "validationResult": {     currentFields: null,     validFields: "any",     message: "string",     valid: false }
     },
     {
         "name": "1995-08-24_competition_spa-francorchamps_voiture",
         "path": "/Photo/50-Phototheque/##Events 10-15 j/1995-08-24_competition_spa-francorchamps_voiture",
         "description": null,
         "metaDataFromPhotoshoot": null,
-        "groupOfPhoto": null
+        "groupOfPhoto": null,
+        "validationResult": {     currentFields: null,     validFields: "any",     message: "string",     valid: false }
     },
     {
         "name": "2019-11-06_accident_antony_romain",
         "path": "/Photo/50-Phototheque/##Events 10-15 j/2019-11-06_accident_antony_romain",
         "description": null,
         "metaDataFromPhotoshoot": null,
-        "groupOfPhoto": null
+        "groupOfPhoto": null,
+        "validationResult": {     currentFields: null,     validFields: "any",     message: "string",     valid: false }
     },
     {
         "name": "2021-04-21_parc_chatillion_enfants",
         "path": "/Photo/50-Phototheque/##Events 10-15 j/2021-04-21_parc_chatillion_enfants",
         "description": null,
         "metaDataFromPhotoshoot": null,
-        "groupOfPhoto": null
+        "groupOfPhoto": null,
+        "validationResult": {     currentFields: null,     validFields: "any",     message: "string",     valid: false }
     },
     {
         "name": "2018-06-30_randonnee_lemans_roller",
         "path": "/Photo/50-Phototheque/##Events 10-15 j/2018-06-30_randonnee_lemans_roller",
         "description": null,
         "metaDataFromPhotoshoot": null,
-        "groupOfPhoto": null
+        "groupOfPhoto": null,
+        "validationResult": {     currentFields: null,     validFields: "any",     message: "string",     valid: false }
     },
     {
         "name": "2018-03-11_competition_dourdan_roller",
         "path": "/Photo/50-Phototheque/##Events 10-15 j/2018-03-11_competition_dourdan_roller",
         "description": null,
         "metaDataFromPhotoshoot": null,
-        "groupOfPhoto": null
+        "groupOfPhoto": null,
+        "validationResult": {     currentFields: null,     validFields: "any",     message: "string",     valid: false }
     },
     {
         "name": "2020-10-28_sport_verriere_nelly",
         "path": "/Photo/50-Phototheque/##Events 10-15 j/2020-10-28_sport_verriere_nelly",
         "description": null,
         "metaDataFromPhotoshoot": null,
-        "groupOfPhoto": null
+        "groupOfPhoto": null,
+        "validationResult": {     currentFields: null,     validFields: "any",     message: "string",     valid: false }
     },
     {
         "name": "ferme de gally",
         "path": "/Photo/50-Phototheque/##Events 10-15 j/ferme de gally",
         "description": null,
         "metaDataFromPhotoshoot": null,
-        "groupOfPhoto": null
+        "groupOfPhoto": null,
+        "validationResult": {     currentFields: null,     validFields: "any",     message: "string",     valid: false }
     },
     {
         "name": "2018-01-17_nouvel an_antony_famille",
         "path": "/Photo/50-Phototheque/##Events 10-15 j/2018-01-17_nouvel an_antony_famille",
         "description": null,
         "metaDataFromPhotoshoot": null,
-        "groupOfPhoto": null
+        "groupOfPhoto": null,
+        "validationResult": {     currentFields: null,     validFields: "any",     message: "string",     valid: false }
     },
     {
         "name": "quai branly",
         "path": "/Photo/50-Phototheque/##Events 10-15 j/quai branly",
         "description": null,
         "metaDataFromPhotoshoot": null,
-        "groupOfPhoto": null
+        "groupOfPhoto": null,
+        "validationResult": {     currentFields: null,     validFields: "any",     message: "string",     valid: false }
     },
     {
         "name": "2010-11-07_exposition_paris_photo",
         "path": "/Photo/50-Phototheque/##Events 10-15 j/2010-11-07_exposition_paris_photo",
         "description": null,
         "metaDataFromPhotoshoot": null,
-        "groupOfPhoto": null
+        "groupOfPhoto": null,
+        "validationResult": {     currentFields: null,     validFields: "any",     message: "string",     valid: false }
     },
     {
         "name": "2020-08-20_excursion_fontainbleau_famille",
         "path": "/Photo/50-Phototheque/##Events 10-15 j/2020-08-20_excursion_fontainbleau_famille",
         "description": null,
         "metaDataFromPhotoshoot": null,
-        "groupOfPhoto": null
+        "groupOfPhoto": null,
+        "validationResult": {     currentFields: null,     validFields: "any",     message: "string",     valid: false }
     },
     {
         "name": "2019-12-29_sortie_antony_patinoire",
         "path": "/Photo/50-Phototheque/##Events 10-15 j/2019-12-29_sortie_antony_patinoire",
         "description": null,
         "metaDataFromPhotoshoot": null,
-        "groupOfPhoto": null
+        "groupOfPhoto": null,
+        "validationResult": {     currentFields: null,     validFields: "any",     message: "string",     valid: false }
     },
     {
         "name": "2021-01-16_anniversaire_antony_romain",
         "path": "/Photo/50-Phototheque/##Events 10-15 j/2021-01-16_anniversaire_antony_romain",
         "description": null,
         "metaDataFromPhotoshoot": null,
-        "groupOfPhoto": null
+        "groupOfPhoto": null,
+        "validationResult": {     currentFields: null,     validFields: "any",     message: "string",     valid: false }
     },
     {
         "name": "2023-05-06_sortie_louvre_sandrine",
         "path": "/Photo/50-Phototheque/##Events 10-15 j/2023-05-06_sortie_louvre_sandrine",
         "description": null,
         "metaDataFromPhotoshoot": null,
-        "groupOfPhoto": null
+        "groupOfPhoto": null,
+        "validationResult": {     currentFields: null,     validFields: "any",     message: "string",     valid: false }
     },
     {
         "name": "2019-05-08_anniversaire_thiais_laureline",
         "path": "/Photo/50-Phototheque/##Events 10-15 j/2019-05-08_anniversaire_thiais_laureline",
         "description": null,
         "metaDataFromPhotoshoot": null,
-        "groupOfPhoto": null
+        "groupOfPhoto": null,
+        "validationResult": {     currentFields: null,     validFields: "any",     message: "string",     valid: false }
     },
     {
         "name": "2020-07-18_mariage_montbazon_melanie",
         "path": "/Photo/50-Phototheque/##Events 10-15 j/2020-07-18_mariage_montbazon_melanie",
         "description": null,
         "metaDataFromPhotoshoot": null,
-        "groupOfPhoto": null
+        "groupOfPhoto": null,
+        "validationResult": {     currentFields: null,     validFields: "any",     message: "string",     valid: false }
     },
     {
         "name": "2018-07-21_sport_perrone_parachute",
         "path": "/Photo/50-Phototheque/##Events 10-15 j/2018-07-21_sport_perrone_parachute",
         "description": null,
         "metaDataFromPhotoshoot": null,
-        "groupOfPhoto": null
+        "groupOfPhoto": null,
+        "validationResult": {     currentFields: null,     validFields: "any",     message: "string",     valid: false }
     },
     {
         "name": "2020-01-11_soiree_paris_hockey",
         "path": "/Photo/50-Phototheque/##Events 10-15 j/2020-01-11_soiree_paris_hockey",
         "description": null,
         "metaDataFromPhotoshoot": null,
-        "groupOfPhoto": null
+        "groupOfPhoto": null,
+        "validationResult": {     currentFields: null,     validFields: "any",     message: "string",     valid: false }
     },
     {
         "name": "2019-05-11_sport_dijon_roller",
         "path": "/Photo/50-Phototheque/##Events 10-15 j/2019-05-11_sport_dijon_roller",
         "description": null,
         "metaDataFromPhotoshoot": null,
-        "groupOfPhoto": null
+        "groupOfPhoto": null,
+        "validationResult": {     currentFields: null,     validFields: "any",     message: "string",     valid: false }
     },
     {
         "name": "2018-02-25_nouvel an lunaire_paris_defilé",
         "path": "/Photo/50-Phototheque/##Events 10-15 j/2018-02-25_nouvel an lunaire_paris_defilé",
         "description": null,
         "metaDataFromPhotoshoot": null,
-        "groupOfPhoto": null
+        "groupOfPhoto": null,
+        "validationResult": {     currentFields: null,     validFields: "any",     message: "string",     valid: false }
     },
     {
         "name": "Guédelon",
         "path": "/Photo/50-Phototheque/##Events 10-15 j/Guédelon",
         "description": null,
         "metaDataFromPhotoshoot": null,
-        "groupOfPhoto": null
+        "groupOfPhoto": null,
+        "validationResult": {     currentFields: null,     validFields: "any",     message: "string",     valid: false }
     },
     {
         "name": "2018-01-15_anniversaire_antony_romain",
         "path": "/Photo/50-Phototheque/##Events 10-15 j/2018-01-15_anniversaire_antony_romain",
         "description": null,
         "metaDataFromPhotoshoot": null,
-        "groupOfPhoto": null
+        "groupOfPhoto": null,
+        "validationResult": {     currentFields: null,     validFields: "any",     message: "string",     valid: false }
     },
     {
         "name": "2019-10-09_accident_antony_romain",
         "path": "/Photo/50-Phototheque/##Events 10-15 j/2019-10-09_accident_antony_romain",
         "description": null,
         "metaDataFromPhotoshoot": null,
-        "groupOfPhoto": null
+        "groupOfPhoto": null,
+        "validationResult": {     currentFields: null,     validFields: "any",     message: "string",     valid: false }
     },
     {
         "name": "2019-07-10_sortie_paris_virginie",
         "path": "/Photo/50-Phototheque/##Events 10-15 j/2019-07-10_sortie_paris_virginie",
         "description": null,
         "metaDataFromPhotoshoot": null,
-        "groupOfPhoto": null
+        "groupOfPhoto": null,
+        "validationResult": {     currentFields: null,     validFields: "any",     message: "string",     valid: false }
     },
     {
         "name": "2021-06-29_ecole_fontainbleau_laureline",
         "path": "/Photo/50-Phototheque/##Events 10-15 j/2021-06-29_ecole_fontainbleau_laureline",
         "description": null,
         "metaDataFromPhotoshoot": null,
-        "groupOfPhoto": null
+        "groupOfPhoto": null,
+        "validationResult": {     currentFields: null,     validFields: "any",     message: "string",     valid: false }
     },
     {
         "name": "2018-04-08_randonnee_massy_roller",
         "path": "/Photo/50-Phototheque/##Events 10-15 j/2018-04-08_randonnee_massy_roller",
         "description": null,
         "metaDataFromPhotoshoot": null,
-        "groupOfPhoto": null
+        "groupOfPhoto": null,
+        "validationResult": {     currentFields: null,     validFields: "any",     message: "string",     valid: false }
     },
     {
         "name": "2019-01-30_week-end_antony_neige",
         "path": "/Photo/50-Phototheque/##Events 10-15 j/2019-01-30_week-end_antony_neige",
         "description": null,
         "metaDataFromPhotoshoot": null,
-        "groupOfPhoto": null
+        "groupOfPhoto": null,
+        "validationResult": {     currentFields: null,     validFields: "any",     message: "string",     valid: false }
     },
     {
         "name": "2018-12-29_sortie_antony_patinoire",
         "path": "/Photo/50-Phototheque/##Events 10-15 j/2018-12-29_sortie_antony_patinoire",
         "description": null,
         "metaDataFromPhotoshoot": null,
-        "groupOfPhoto": null
+        "groupOfPhoto": null,
+        "validationResult": {     currentFields: null,     validFields: "any",     message: "string",     valid: false }
     },
     {
         "name": "2021-12-11_anniversaire_antony_miya",
         "path": "/Photo/50-Phototheque/##Events 10-15 j/2021-12-11_anniversaire_antony_miya",
         "description": null,
         "metaDataFromPhotoshoot": null,
-        "groupOfPhoto": null
+        "groupOfPhoto": null,
+        "validationResult": {     currentFields: null,     validFields: "any",     message: "string",     valid: false }
     },
     {
         "name": "2018-06-10_dinner_antony_sandrine",
         "path": "/Photo/50-Phototheque/##Events 10-15 j/2018-06-10_dinner_antony_sandrine",
         "description": null,
         "metaDataFromPhotoshoot": null,
-        "groupOfPhoto": null
+        "groupOfPhoto": null,
+        "validationResult": {     currentFields: null,     validFields: "any",     message: "string",     valid: false }
     },
     {
         "name": "2019-05-23_spectacle_antony_laureline",
         "path": "/Photo/50-Phototheque/##Events 10-15 j/2019-05-23_spectacle_antony_laureline",
         "description": null,
         "metaDataFromPhotoshoot": null,
-        "groupOfPhoto": null
+        "groupOfPhoto": null,
+        "validationResult": {     currentFields: null,     validFields: "any",     message: "string",     valid: false }
     },
     {
         "name": "2018-04-02_anniversaire_antony_nelly",
         "path": "/Photo/50-Phototheque/##Events 10-15 j/2018-04-02_anniversaire_antony_nelly",
         "description": null,
         "metaDataFromPhotoshoot": null,
-        "groupOfPhoto": null
+        "groupOfPhoto": null,
+        "validationResult": {     currentFields: null,     validFields: "any",     message: "string",     valid: false }
     },
     {
         "name": "2021-07-03_fete_antony_nelly",
         "path": "/Photo/50-Phototheque/##Events 10-15 j/2021-07-03_fete_antony_nelly",
         "description": null,
         "metaDataFromPhotoshoot": null,
-        "groupOfPhoto": null
+        "groupOfPhoto": null,
+        "validationResult": {     currentFields: null,     validFields: "any",     message: "string",     valid: false }
     },
     {
         "name": "halloween",
         "path": "/Photo/50-Phototheque/##Events 10-15 j/halloween",
         "description": null,
         "metaDataFromPhotoshoot": null,
-        "groupOfPhoto": null
+        "groupOfPhoto": null,
+        "validationResult": {     currentFields: null,     validFields: "any",     message: "string",     valid: false }
     },
     {
         "name": "2019-08-19_sortie_elancourt_enfants",
         "path": "/Photo/50-Phototheque/##Events 10-15 j/2019-08-19_sortie_elancourt_enfants",
         "description": null,
         "metaDataFromPhotoshoot": null,
-        "groupOfPhoto": null
+        "groupOfPhoto": null,
+        "validationResult": {     currentFields: null,     validFields: "any",     message: "string",     valid: false }
     },
     {
         "name": "2019-06-16_barbecue_antony_roller",
         "path": "/Photo/50-Phototheque/##Events 10-15 j/2019-06-16_barbecue_antony_roller",
         "description": null,
         "metaDataFromPhotoshoot": null,
-        "groupOfPhoto": null
+        "groupOfPhoto": null,
+        "validationResult": {     currentFields: null,     validFields: "any",     message: "string",     valid: false }
     },
     {
         "name": "2023-06-30_spectacle_antony_nelly",
         "path": "/Photo/50-Phototheque/##Events 10-15 j/2023-06-30_spectacle_antony_nelly",
         "description": null,
         "metaDataFromPhotoshoot": null,
-        "groupOfPhoto": null
+        "groupOfPhoto": null,
+        "validationResult": {     currentFields: null,     validFields: "any",     message: "string",     valid: false }
     },
     {
         "name": "anniversaire melina",
         "path": "/Photo/50-Phototheque/##Events 10-15 j/anniversaire melina",
         "description": null,
         "metaDataFromPhotoshoot": null,
-        "groupOfPhoto": null
+        "groupOfPhoto": null,
+        "validationResult": {     currentFields: null,     validFields: "any",     message: "string",     valid: false }
     },
     {
         "name": "2020-08-22_visite_dourdan_chateau",
         "path": "/Photo/50-Phototheque/##Events 10-15 j/2020-08-22_visite_dourdan_chateau",
         "description": null,
         "metaDataFromPhotoshoot": null,
-        "groupOfPhoto": null
+        "groupOfPhoto": null,
+        "validationResult": {     currentFields: null,     validFields: "any",     message: "string",     valid: false }
     },
     {
         "name": "2018-12-09_anniversaire_antony_miya",
         "path": "/Photo/50-Phototheque/##Events 10-15 j/2018-12-09_anniversaire_antony_miya",
         "description": null,
         "metaDataFromPhotoshoot": null,
-        "groupOfPhoto": null
+        "groupOfPhoto": null,
+        "validationResult": {     currentFields: null,     validFields: "any",     message: "string",     valid: false }
     },
     {
         "name": "2020-04-08_anniversaire_antony_nelly",
         "path": "/Photo/50-Phototheque/##Events 10-15 j/2020-04-08_anniversaire_antony_nelly",
         "description": null,
         "metaDataFromPhotoshoot": null,
-        "groupOfPhoto": null
+        "groupOfPhoto": null,
+        "validationResult": {     currentFields: null,     validFields: "any",     message: "string",     valid: false }
     },
     {
         "name": "2020-12-13_anniversaire_antony_miya",
         "path": "/Photo/50-Phototheque/##Events 10-15 j/2020-12-13_anniversaire_antony_miya",
         "description": null,
         "metaDataFromPhotoshoot": null,
-        "groupOfPhoto": null
+        "groupOfPhoto": null,
+        "validationResult": {     currentFields: null,     validFields: "any",     message: "string",     valid: false }
     },
     {
         "name": "2019-04-22_paques_antony_enfants",
         "path": "/Photo/50-Phototheque/##Events 10-15 j/2019-04-22_paques_antony_enfants",
         "description": null,
         "metaDataFromPhotoshoot": null,
-        "groupOfPhoto": null
+        "groupOfPhoto": null,
+        "validationResult": {     currentFields: null,     validFields: "any",     message: "string",     valid: false }
     },
     {
         "name": "2023-05-08_fete_antony_copain",
         "path": "/Photo/50-Phototheque/##Events 10-15 j/2023-05-08_fete_antony_copain",
         "description": null,
         "metaDataFromPhotoshoot": null,
-        "groupOfPhoto": null
+        "groupOfPhoto": null,
+        "validationResult": {     currentFields: null,     validFields: "any",     message: "string",     valid: false }
     },
     {
         "name": "2019-09-11_sport_antony_laureline",
         "path": "/Photo/50-Phototheque/##Events 10-15 j/2019-09-11_sport_antony_laureline",
         "description": null,
         "metaDataFromPhotoshoot": null,
-        "groupOfPhoto": null
+        "groupOfPhoto": null,
+        "validationResult": {     currentFields: null,     validFields: "any",     message: "string",     valid: false }
     },
     {
         "name": "2020-01-14_sport_antony_laureline",
         "path": "/Photo/50-Phototheque/##Events 10-15 j/2020-01-14_sport_antony_laureline",
         "description": null,
         "metaDataFromPhotoshoot": null,
-        "groupOfPhoto": null
+        "groupOfPhoto": null,
+        "validationResult": {     currentFields: null,     validFields: "any",     message: "string",     valid: false }
     },
     {
         "name": "2023-06-29_spectacle_antony_laureline",
         "path": "/Photo/50-Phototheque/##Events 10-15 j/2023-06-29_spectacle_antony_laureline",
         "description": null,
         "metaDataFromPhotoshoot": null,
-        "groupOfPhoto": null
+        "groupOfPhoto": null,
+        "validationResult": {     currentFields: null,     validFields: "any",     message: "string",     valid: false }
     },
     {
         "name": "2023-04-10_anniversaire_antony_nelly",
         "path": "/Photo/50-Phototheque/##Events 10-15 j/2023-04-10_anniversaire_antony_nelly",
         "description": null,
         "metaDataFromPhotoshoot": null,
-        "groupOfPhoto": null
+        "groupOfPhoto": null,
+        "validationResult": {     currentFields: null,     validFields: "any",     message: "string",     valid: false }
     },
     {
         "name": "fermeture fringante",
         "path": "/Photo/50-Phototheque/##Events 10-15 j/fermeture fringante",
         "description": null,
         "metaDataFromPhotoshoot": null,
-        "groupOfPhoto": null
+        "groupOfPhoto": null,
+        "validationResult": {     currentFields: null,     validFields: "any",     message: "string",     valid: false }
     },
     {
         "name": "2021-07-03_sortie_antony_miya",
         "path": "/Photo/50-Phototheque/##Events 10-15 j/2021-07-03_sortie_antony_miya",
         "description": null,
         "metaDataFromPhotoshoot": null,
-        "groupOfPhoto": null
+        "groupOfPhoto": null,
+        "validationResult": {     currentFields: null,     validFields: "any",     message: "string",     valid: false }
     },
     {
         "name": "2018-10-31_halloween_antony_none",
         "path": "/Photo/50-Phototheque/##Events 10-15 j/2018-10-31_halloween_antony_none",
         "description": null,
         "metaDataFromPhotoshoot": null,
-        "groupOfPhoto": null
+        "groupOfPhoto": null,
+        "validationResult": {     currentFields: null,     validFields: "any",     message: "string",     valid: false }
     },
     {
         "name": "2019-06-15_sortie_clichy_enfants",
         "path": "/Photo/50-Phototheque/##Events 10-15 j/2019-06-15_sortie_clichy_enfants",
         "description": null,
         "metaDataFromPhotoshoot": null,
-        "groupOfPhoto": null
+        "groupOfPhoto": null,
+        "validationResult": {     currentFields: null,     validFields: "any",     message: "string",     valid: false }
     },
     {
         "name": "2018-04-02_paques_antony_enfants",
         "path": "/Photo/50-Phototheque/##Events 10-15 j/2018-04-02_paques_antony_enfants",
         "description": null,
         "metaDataFromPhotoshoot": null,
-        "groupOfPhoto": null
+        "groupOfPhoto": null,
+        "validationResult": {     currentFields: null,     validFields: "any",     message: "string",     valid: false }
     },
     {
         "name": "2019-10-31_halloween_antony_enfants",
         "path": "/Photo/50-Phototheque/##Events 10-15 j/2019-10-31_halloween_antony_enfants",
         "description": null,
         "metaDataFromPhotoshoot": null,
-        "groupOfPhoto": null
+        "groupOfPhoto": null,
+        "validationResult": {     currentFields: null,     validFields: "any",     message: "string",     valid: false }
     },
     {
         "name": "2018-02-11_sport_paris_roller",
         "path": "/Photo/50-Phototheque/##Events 10-15 j/2018-02-11_sport_paris_roller",
         "description": null,
         "metaDataFromPhotoshoot": null,
-        "groupOfPhoto": null
+        "groupOfPhoto": null,
+        "validationResult": {     currentFields: null,     validFields: "any",     message: "string",     valid: false }
     },
     {
         "name": "2021-04-04_paques_antony_famille",
         "path": "/Photo/50-Phototheque/##Events 10-15 j/2021-04-04_paques_antony_famille",
         "description": null,
         "metaDataFromPhotoshoot": null,
-        "groupOfPhoto": null
+        "groupOfPhoto": null,
+        "validationResult": {     currentFields: null,     validFields: "any",     message: "string",     valid: false }
     },
     {
         "name": "2020-03-08_sport_antony_laureline",
         "path": "/Photo/50-Phototheque/##Events 10-15 j/2020-03-08_sport_antony_laureline",
         "description": null,
         "metaDataFromPhotoshoot": null,
-        "groupOfPhoto": null
+        "groupOfPhoto": null,
+        "validationResult": {     currentFields: null,     validFields: "any",     message: "string",     valid: false }
     },
     {
         "name": "2021-05-30_week-end_sarges-le-mans_alexandre",
         "path": "/Photo/50-Phototheque/##Events 10-15 j/2021-05-30_week-end_sarges-le-mans_alexandre",
         "description": null,
         "metaDataFromPhotoshoot": null,
-        "groupOfPhoto": null
+        "groupOfPhoto": null,
+        "validationResult": {     currentFields: null,     validFields: "any",     message: "string",     valid: false }
     },
     {
         "name": "2019-12-01_sortie_sarges-le-mans_bowling",
         "path": "/Photo/50-Phototheque/##Events 10-15 j/2019-12-01_sortie_sarges-le-mans_bowling",
         "description": null,
         "metaDataFromPhotoshoot": null,
-        "groupOfPhoto": null
+        "groupOfPhoto": null,
+        "validationResult": {     currentFields: null,     validFields: "any",     message: "string",     valid: false }
     },
     {
         "name": "2019-12-26_noël_clichy_enfants",
         "path": "/Photo/50-Phototheque/##Events 10-15 j/2019-12-26_noël_clichy_enfants",
         "description": null,
         "metaDataFromPhotoshoot": null,
-        "groupOfPhoto": null
+        "groupOfPhoto": null,
+        "validationResult": {     currentFields: null,     validFields: "any",     message: "string",     valid: false }
     },
     {
         "name": "1993-01-15_anniversaire_antony_romain",
         "path": "/Photo/50-Phototheque/##Events 10-15 j/1993-01-15_anniversaire_antony_romain",
         "description": null,
         "metaDataFromPhotoshoot": null,
-        "groupOfPhoto": null
+        "groupOfPhoto": null,
+        "validationResult": {     currentFields: null,     validFields: "any",     message: "string",     valid: false }
     },
     {
         "name": "2020-07-12_sortie_elancourt_franceminiature",
         "path": "/Photo/50-Phototheque/##Events 10-15 j/2020-07-12_sortie_elancourt_franceminiature",
         "description": null,
         "metaDataFromPhotoshoot": null,
-        "groupOfPhoto": null
+        "groupOfPhoto": null,
+        "validationResult": {     currentFields: null,     validFields: "any",     message: "string",     valid: false }
     },
     {
         "name": "1992-12-01_salon_paris_bateau à voile",
         "path": "/Photo/50-Phototheque/##Events 10-15 j/1992-12-01_salon_paris_bateau à voile",
         "description": null,
         "metaDataFromPhotoshoot": null,
-        "groupOfPhoto": null
+        "groupOfPhoto": null,
+        "validationResult": {     currentFields: null,     validFields: "any",     message: "string",     valid: false }
     },
     {
         "name": "2018-01-11_soiree_paris_sodifrance",
         "path": "/Photo/50-Phototheque/##Events 10-15 j/2018-01-11_soiree_paris_sodifrance",
         "description": null,
         "metaDataFromPhotoshoot": null,
-        "groupOfPhoto": null
+        "groupOfPhoto": null,
+        "validationResult": {     currentFields: null,     validFields: "any",     message: "string",     valid: false }
     },
     {
         "name": "2021-06-19_anniversaire_antony_nelly",
         "path": "/Photo/50-Phototheque/##Events 10-15 j/2021-06-19_anniversaire_antony_nelly",
         "description": null,
         "metaDataFromPhotoshoot": null,
-        "groupOfPhoto": null
+        "groupOfPhoto": null,
+        "validationResult": {     currentFields: null,     validFields: "any",     message: "string",     valid: false }
     },
     {
         "name": "1996-01-21_fete_noisy-le-sec_sandrine",
         "path": "/Photo/50-Phototheque/##Events 10-15 j/1996-01-21_fete_noisy-le-sec_sandrine",
         "description": null,
         "metaDataFromPhotoshoot": null,
-        "groupOfPhoto": null
+        "groupOfPhoto": null,
+        "validationResult": {     currentFields: null,     validFields: "any",     message: "string",     valid: false }
     },
     {
         "name": "2023-04-16_week-end_dieppe_cerf-volant",
         "path": "/Photo/50-Phototheque/##Events 10-15 j/2023-04-16_week-end_dieppe_cerf-volant",
         "description": null,
         "metaDataFromPhotoshoot": null,
-        "groupOfPhoto": null
+        "groupOfPhoto": null,
+        "validationResult": {     currentFields: null,     validFields: "any",     message: "string",     valid: false }
     },
     {
         "name": "2023-07-02_sortie_ermenonville_famille",
         "path": "/Photo/50-Phototheque/##Events 10-15 j/2023-07-02_sortie_ermenonville_famille",
         "description": null,
         "metaDataFromPhotoshoot": null,
-        "groupOfPhoto": null
+        "groupOfPhoto": null,
+        "validationResult": {     currentFields: null,     validFields: "any",     message: "string",     valid: false }
     },
     {
         "name": "2021-04-08_anniversaire_antony_nelly",
         "path": "/Photo/50-Phototheque/##Events 10-15 j/2021-04-08_anniversaire_antony_nelly",
         "description": null,
         "metaDataFromPhotoshoot": null,
-        "groupOfPhoto": null
+        "groupOfPhoto": null,
+        "validationResult": {     currentFields: null,     validFields: "any",     message: "string",     valid: false }
     },
     {
         "name": "2019 poney",
         "path": "/Photo/50-Phototheque/##Events 10-15 j/2019 poney",
         "description": null,
         "metaDataFromPhotoshoot": null,
-        "groupOfPhoto": null
+        "groupOfPhoto": null,
+        "validationResult": {     currentFields: null,     validFields: "any",     message: "string",     valid: false }
     },
     {
         "name": "2020-12-31_noël_antony_enfants",
         "path": "/Photo/50-Phototheque/##Events 10-15 j/2020-12-31_noël_antony_enfants",
         "description": null,
         "metaDataFromPhotoshoot": null,
-        "groupOfPhoto": null
+        "groupOfPhoto": null,
+        "validationResult": {     currentFields: null,     validFields: "any",     message: "string",     valid: false }
     },
     {
         "name": "2018-09-01_barbecue_antony_romain",
         "path": "/Photo/50-Phototheque/##Events 10-15 j/2018-09-01_barbecue_antony_romain",
         "description": null,
         "metaDataFromPhotoshoot": null,
-        "groupOfPhoto": null
+        "groupOfPhoto": null,
+        "validationResult": {     currentFields: null,     validFields: "any",     message: "string",     valid: false }
     },
     {
         "name": "2019-05-19_visite_vaux-le-vicomte_colette",
         "path": "/Photo/50-Phototheque/##Events 10-15 j/2019-05-19_visite_vaux-le-vicomte_colette",
         "description": null,
         "metaDataFromPhotoshoot": null,
-        "groupOfPhoto": null
+        "groupOfPhoto": null,
+        "validationResult": {     currentFields: null,     validFields: "any",     message: "string",     valid: false }
     },
     {
         "name": "2020-12-11_anniversaire_antony_miya",
         "path": "/Photo/50-Phototheque/##Events 10-15 j/2020-12-11_anniversaire_antony_miya",
         "description": null,
         "metaDataFromPhotoshoot": null,
-        "groupOfPhoto": null
+        "groupOfPhoto": null,
+        "validationResult": {     currentFields: null,     validFields: "any",     message: "string",     valid: false }
     },
     {
         "name": "2022-10-27_halloween_ferme de gally_famille",
         "path": "/Photo/50-Phototheque/##Events 10-15 j/2022-10-27_halloween_ferme de gally_famille",
         "description": null,
         "metaDataFromPhotoshoot": null,
-        "groupOfPhoto": null
+        "groupOfPhoto": null,
+        "validationResult": {     currentFields: null,     validFields: "any",     message: "string",     valid: false }
     },
     {
         "name": "2018-08-19_barbecue_neuilly_benoit",
         "path": "/Photo/50-Phototheque/##Events 10-15 j/2018-08-19_barbecue_neuilly_benoit",
         "description": null,
         "metaDataFromPhotoshoot": null,
-        "groupOfPhoto": null
+        "groupOfPhoto": null,
+        "validationResult": {     currentFields: null,     validFields: "any",     message: "string",     valid: false }
     },
     {
         "name": "2019-12-18_sortie_antony_patinoire",
         "path": "/Photo/50-Phototheque/##Events 10-15 j/2019-12-18_sortie_antony_patinoire",
         "description": null,
         "metaDataFromPhotoshoot": null,
-        "groupOfPhoto": null
+        "groupOfPhoto": null,
+        "validationResult": {     currentFields: null,     validFields: "any",     message: "string",     valid: false }
     },
     {
         "name": "2021-07-03_anniversaire_antony_laureline",
         "path": "/Photo/50-Phototheque/##Events 10-15 j/2021-07-03_anniversaire_antony_laureline",
         "description": null,
         "metaDataFromPhotoshoot": null,
-        "groupOfPhoto": null
+        "groupOfPhoto": null,
+        "validationResult": {     currentFields: null,     validFields: "any",     message: "string",     valid: false }
     },
     {
         "name": "anniversaire benoit",
         "path": "/Photo/50-Phototheque/##Events 10-15 j/anniversaire benoit",
         "description": null,
         "metaDataFromPhotoshoot": null,
-        "groupOfPhoto": null
+        "groupOfPhoto": null,
+        "validationResult": {     currentFields: null,     validFields: "any",     message: "string",     valid: false }
     },
     {
         "name": "2010-10-02_soiree_paris_sandrine",
         "path": "/Photo/50-Phototheque/##Events 10-15 j/2010-10-02_soiree_paris_sandrine",
         "description": null,
         "metaDataFromPhotoshoot": null,
-        "groupOfPhoto": null
+        "groupOfPhoto": null,
+        "validationResult": {     currentFields: null,     validFields: "any",     message: "string",     valid: false }
     },
     {
         "name": "2018-06-03_competition_collegien_hockey",
         "path": "/Photo/50-Phototheque/##Events 10-15 j/2018-06-03_competition_collegien_hockey",
         "description": null,
         "metaDataFromPhotoshoot": null,
-        "groupOfPhoto": null
+        "groupOfPhoto": null,
+        "validationResult": {     currentFields: null,     validFields: "any",     message: "string",     valid: false }
     },
     {
         "name": "2020-01-25_competition_chatillion_laureline",
         "path": "/Photo/50-Phototheque/##Events 10-15 j/2020-01-25_competition_chatillion_laureline",
         "description": null,
         "metaDataFromPhotoshoot": null,
-        "groupOfPhoto": null
+        "groupOfPhoto": null,
+        "validationResult": {     currentFields: null,     validFields: "any",     message: "string",     valid: false }
     },
     {
         "name": "2020-07-13_excursion_saint-quentin-yvelines_enfants",
         "path": "/Photo/50-Phototheque/##Events 10-15 j/2020-07-13_excursion_saint-quentin-yvelines_enfants",
         "description": null,
         "metaDataFromPhotoshoot": null,
-        "groupOfPhoto": null
+        "groupOfPhoto": null,
+        "validationResult": {     currentFields: null,     validFields: "any",     message: "string",     valid: false }
     },
     {
         "name": "2020-08-01_anniversaire_antony_laureline",
         "path": "/Photo/50-Phototheque/##Events 10-15 j/2020-08-01_anniversaire_antony_laureline",
         "description": null,
         "metaDataFromPhotoshoot": null,
-        "groupOfPhoto": null
+        "groupOfPhoto": null,
+        "validationResult": {     currentFields: null,     validFields: "any",     message: "string",     valid: false }
     },
     {
         "name": "2009-12-31_nouvel an_rosny_david",
         "path": "/Photo/50-Phototheque/##Events 10-15 j/2009-12-31_nouvel an_rosny_david",
         "description": null,
         "metaDataFromPhotoshoot": null,
-        "groupOfPhoto": null
+        "groupOfPhoto": null,
+        "validationResult": {     currentFields: null,     validFields: "any",     message: "string",     valid: false }
     },
     {
         "name": "ferm de gally",
         "path": "/Photo/50-Phototheque/##Events 10-15 j/ferm de gally",
         "description": null,
         "metaDataFromPhotoshoot": null,
-        "groupOfPhoto": null
+        "groupOfPhoto": null,
+        "validationResult": {     currentFields: null,     validFields: "any",     message: "string",     valid: false }
     },
     {
         "name": "2020-12-31_nouvel an_collegien_hl&jc",
         "path": "/Photo/50-Phototheque/##Events 10-15 j/2020-12-31_nouvel an_collegien_hl&jc",
         "description": null,
         "metaDataFromPhotoshoot": null,
-        "groupOfPhoto": null
+        "groupOfPhoto": null,
+        "validationResult": {     currentFields: null,     validFields: "any",     message: "string",     valid: false }
     },
     {
         "name": "1996-01-15_anniversaire_antony_romain",
         "path": "/Photo/50-Phototheque/##Events 10-15 j/1996-01-15_anniversaire_antony_romain",
         "description": null,
         "metaDataFromPhotoshoot": null,
-        "groupOfPhoto": null
+        "groupOfPhoto": null,
+        "validationResult": {     currentFields: null,     validFields: "any",     message: "string",     valid: false }
     },
     {
         "name": "2022-12-26_exposition_saint cloud_famille",
         "path": "/Photo/50-Phototheque/##Events 10-15 j/2022-12-26_exposition_saint cloud_famille",
         "description": null,
         "metaDataFromPhotoshoot": null,
-        "groupOfPhoto": null
+        "groupOfPhoto": null,
+        "validationResult": {     currentFields: null,     validFields: "any",     message: "string",     valid: false }
     },
     {
         "name": "2003-10-01_mariage_royan_grand parent",
         "path": "/Photo/50-Phototheque/##Events 10-15 j/2003-10-01_mariage_royan_grand parent",
         "description": null,
         "metaDataFromPhotoshoot": null,
-        "groupOfPhoto": null
+        "groupOfPhoto": null,
+        "validationResult": {     currentFields: null,     validFields: "any",     message: "string",     valid: false }
     },
     {
         "name": "2018-12-17_sortie_lyon_team building",
         "path": "/Photo/50-Phototheque/##Events 10-15 j/2018-12-17_sortie_lyon_team building",
         "description": null,
         "metaDataFromPhotoshoot": null,
-        "groupOfPhoto": null
+        "groupOfPhoto": null,
+        "validationResult": {     currentFields: null,     validFields: "any",     message: "string",     valid: false }
     },
     {
         "name": "2019-06-16_sortie_paris_fifa wwc",
         "path": "/Photo/50-Phototheque/##Events 10-15 j/2019-06-16_sortie_paris_fifa wwc",
         "description": null,
         "metaDataFromPhotoshoot": null,
-        "groupOfPhoto": null
+        "groupOfPhoto": null,
+        "validationResult": {     currentFields: null,     validFields: "any",     message: "string",     valid: false }
     },
     {
         "name": "2020-10-24_sortie_paris_enfants",
         "path": "/Photo/50-Phototheque/##Events 10-15 j/2020-10-24_sortie_paris_enfants",
         "description": null,
         "metaDataFromPhotoshoot": null,
-        "groupOfPhoto": null
+        "groupOfPhoto": null,
+        "validationResult": {     currentFields: null,     validFields: "any",     message: "string",     valid: false }
     },
     {
         "name": "2020-10-31_halloween_antony_enfants",
         "path": "/Photo/50-Phototheque/##Events 10-15 j/2020-10-31_halloween_antony_enfants",
         "description": null,
         "metaDataFromPhotoshoot": null,
-        "groupOfPhoto": null
+        "groupOfPhoto": null,
+        "validationResult": {     currentFields: null,     validFields: "any",     message: "string",     valid: false }
     },
     {
         "name": "2019-04-28_week-end_ la fleche_zoo",
         "path": "/Photo/50-Phototheque/##Events 10-15 j/2019-04-28_week-end_ la fleche_zoo",
         "description": null,
         "metaDataFromPhotoshoot": null,
-        "groupOfPhoto": null
+        "groupOfPhoto": null,
+        "validationResult": {     currentFields: null,     validFields: "any",     message: "string",     valid: false }
     },
     {
         "name": "2020-12-24_noël_vitry_seb&ahlem",
         "path": "/Photo/50-Phototheque/##Events 10-15 j/2020-12-24_noël_vitry_seb&ahlem",
         "description": null,
         "metaDataFromPhotoshoot": null,
-        "groupOfPhoto": null
+        "groupOfPhoto": null,
+        "validationResult": {     currentFields: null,     validFields: "any",     message: "string",     valid: false }
     },
     {
         "name": "2022-04-16_competition_chatenay_nelly",
         "path": "/Photo/50-Phototheque/##Events 10-15 j/2022-04-16_competition_chatenay_nelly",
         "description": null,
         "metaDataFromPhotoshoot": null,
-        "groupOfPhoto": null
+        "groupOfPhoto": null,
+        "validationResult": {     currentFields: null,     validFields: "any",     message: "string",     valid: false }
     },
     {
         "name": "2019-12-28_sortie_antony_patinoire",
         "path": "/Photo/50-Phototheque/##Events 10-15 j/2019-12-28_sortie_antony_patinoire",
         "description": null,
         "metaDataFromPhotoshoot": null,
-        "groupOfPhoto": null
+        "groupOfPhoto": null,
+        "validationResult": {     currentFields: null,     validFields: "any",     message: "string",     valid: false }
     },
     {
         "name": "2023-06-25_spectacle_fresnes_enfants",
         "path": "/Photo/50-Phototheque/##Events 10-15 j/2023-06-25_spectacle_fresnes_enfants",
         "description": null,
         "metaDataFromPhotoshoot": null,
-        "groupOfPhoto": null
+        "groupOfPhoto": null,
+        "validationResult": {     currentFields: null,     validFields: "any",     message: "string",     valid: false }
     },
     {
         "name": "2022-12-24_noël_antony_famille",
         "path": "/Photo/50-Phototheque/##Events 10-15 j/2022-12-24_noël_antony_famille",
         "description": null,
         "metaDataFromPhotoshoot": null,
-        "groupOfPhoto": null
+        "groupOfPhoto": null,
+        "validationResult": {     currentFields: null,     validFields: "any",     message: "string",     valid: false }
     },
     {
         "name": "2021-03-17_anniversaire_antony_sandrine",
         "path": "/Photo/50-Phototheque/##Events 10-15 j/2021-03-17_anniversaire_antony_sandrine",
         "description": null,
         "metaDataFromPhotoshoot": null,
-        "groupOfPhoto": null
+        "groupOfPhoto": null,
+        "validationResult": {     currentFields: null,     validFields: "any",     message: "string",     valid: false }
     },
     {
         "name": "2019-07-21_sortie_noisy-le-sec_enfants",
         "path": "/Photo/50-Phototheque/##Events 10-15 j/2019-07-21_sortie_noisy-le-sec_enfants",
         "description": null,
         "metaDataFromPhotoshoot": null,
-        "groupOfPhoto": null
+        "groupOfPhoto": null,
+        "validationResult": {     currentFields: null,     validFields: "any",     message: "string",     valid: false }
     },
     {
         "name": "2020-10-19_musee_paris_enfants",
         "path": "/Photo/50-Phototheque/##Events 10-15 j/2020-10-19_musee_paris_enfants",
         "description": null,
         "metaDataFromPhotoshoot": null,
-        "groupOfPhoto": null
+        "groupOfPhoto": null,
+        "validationResult": {     currentFields: null,     validFields: "any",     message: "string",     valid: false }
     },
     {
         "name": "2018-01-20_anniversaire_antony_romain",
         "path": "/Photo/50-Phototheque/##Events 10-15 j/2018-01-20_anniversaire_antony_romain",
         "description": null,
         "metaDataFromPhotoshoot": null,
-        "groupOfPhoto": null
+        "groupOfPhoto": null,
+        "validationResult": {     currentFields: null,     validFields: "any",     message: "string",     valid: false }
     },
     {
         "name": "2020-08-27_parc_plailly_chloe",
         "path": "/Photo/50-Phototheque/##Events 10-15 j/2020-08-27_parc_plailly_chloe",
         "description": null,
         "metaDataFromPhotoshoot": null,
-        "groupOfPhoto": null
+        "groupOfPhoto": null,
+        "validationResult": {     currentFields: null,     validFields: "any",     message: "string",     valid: false }
     },
     {
         "name": "2018-12-24_noël_antony_famille",
         "path": "/Photo/50-Phototheque/##Events 10-15 j/2018-12-24_noël_antony_famille",
         "description": null,
         "metaDataFromPhotoshoot": null,
-        "groupOfPhoto": null
+        "groupOfPhoto": null,
+        "validationResult": {     currentFields: null,     validFields: "any",     message: "string",     valid: false }
     },
     {
         "name": "2018-05-19_week-end_la bohalle_cousin",
         "path": "/Photo/50-Phototheque/##Events 10-15 j/2018-05-19_week-end_la bohalle_cousin",
         "description": null,
         "metaDataFromPhotoshoot": null,
-        "groupOfPhoto": null
+        "groupOfPhoto": null,
+        "validationResult": {     currentFields: null,     validFields: "any",     message: "string",     valid: false }
     },
     {
         "name": "2020-10-22_musee_paris_enfants",
         "path": "/Photo/50-Phototheque/##Events 10-15 j/2020-10-22_musee_paris_enfants",
         "description": null,
         "metaDataFromPhotoshoot": null,
-        "groupOfPhoto": null
+        "groupOfPhoto": null,
+        "validationResult": {     currentFields: null,     validFields: "any",     message: "string",     valid: false }
     },
     {
         "name": "2018-06-09_sortie_perrone_sandrine",
         "path": "/Photo/50-Phototheque/##Events 10-15 j/2018-06-09_sortie_perrone_sandrine",
         "description": null,
         "metaDataFromPhotoshoot": null,
-        "groupOfPhoto": null
+        "groupOfPhoto": null,
+        "validationResult": {     currentFields: null,     validFields: "any",     message: "string",     valid: false }
     },
     {
         "name": "2021-05-08_sortie_parc de sceaux_enfants",
         "path": "/Photo/50-Phototheque/##Events 10-15 j/2021-05-08_sortie_parc de sceaux_enfants",
         "description": null,
         "metaDataFromPhotoshoot": null,
-        "groupOfPhoto": null
+        "groupOfPhoto": null,
+        "validationResult": {     currentFields: null,     validFields: "any",     message: "string",     valid: false }
     },
     {
         "name": "2023-04-15_week-end_dieppe_cerf-volant",
         "path": "/Photo/50-Phototheque/##Events 10-15 j/2023-04-15_week-end_dieppe_cerf-volant",
         "description": null,
         "metaDataFromPhotoshoot": null,
-        "groupOfPhoto": null
+        "groupOfPhoto": null,
+        "validationResult": {     currentFields: null,     validFields: "any",     message: "string",     valid: false }
     },
     {
         "name": "anniversaire 3 ans melina",
         "path": "/Photo/50-Phototheque/##Events 10-15 j/anniversaire 3 ans melina",
         "description": null,
         "metaDataFromPhotoshoot": null,
-        "groupOfPhoto": null
+        "groupOfPhoto": null,
+        "validationResult": {     currentFields: null,     validFields: "any",     message: "string",     valid: false }
     },
     {
         "name": "2019-03-30_sport_paris_hockey",
         "path": "/Photo/50-Phototheque/##Events 10-15 j/2019-03-30_sport_paris_hockey",
         "description": null,
         "metaDataFromPhotoshoot": null,
-        "groupOfPhoto": null
+        "groupOfPhoto": null,
+        "validationResult": {     currentFields: null,     validFields: "any",     message: "string",     valid: false }
     },
     {
         "name": "2023-04-06_soiree_velizy_team building",
         "path": "/Photo/50-Phototheque/##Events 10-15 j/2023-04-06_soiree_velizy_team building",
         "description": null,
         "metaDataFromPhotoshoot": null,
-        "groupOfPhoto": null
+        "groupOfPhoto": null,
+        "validationResult": {     currentFields: null,     validFields: "any",     message: "string",     valid: false }
     },
     {
         "name": "2018-03-17_anniversaire_antony_sandrine",
         "path": "/Photo/50-Phototheque/##Events 10-15 j/2018-03-17_anniversaire_antony_sandrine",
         "description": null,
         "metaDataFromPhotoshoot": null,
-        "groupOfPhoto": null
+        "groupOfPhoto": null,
+        "validationResult": {     currentFields: null,     validFields: "any",     message: "string",     valid: false }
     },
     {
         "name": "2018-01-14_sortie_longjumeau_ferme",
         "path": "/Photo/50-Phototheque/##Events 10-15 j/2018-01-14_sortie_longjumeau_ferme",
         "description": null,
         "metaDataFromPhotoshoot": null,
-        "groupOfPhoto": null
+        "groupOfPhoto": null,
+        "validationResult": {     currentFields: null,     validFields: "any",     message: "string",     valid: false }
     },
     {
         "name": "2019-12-30_sortie_paris_disneyland",
         "path": "/Photo/50-Phototheque/##Events 10-15 j/2019-12-30_sortie_paris_disneyland",
         "description": null,
         "metaDataFromPhotoshoot": null,
-        "groupOfPhoto": null
+        "groupOfPhoto": null,
+        "validationResult": {     currentFields: null,     validFields: "any",     message: "string",     valid: false }
     },
     {
         "name": "2023-04-08_anniversaire_antony_nelly",
         "path": "/Photo/50-Phototheque/##Events 10-15 j/2023-04-08_anniversaire_antony_nelly",
         "description": null,
         "metaDataFromPhotoshoot": null,
-        "groupOfPhoto": null
+        "groupOfPhoto": null,
+        "validationResult": {     currentFields: null,     validFields: "any",     message: "string",     valid: false }
     },
     {
         "name": "2019-10-29_musee_paris_enfants",
         "path": "/Photo/50-Phototheque/##Events 10-15 j/2019-10-29_musee_paris_enfants",
         "description": null,
         "metaDataFromPhotoshoot": null,
-        "groupOfPhoto": null
+        "groupOfPhoto": null,
+        "validationResult": {     currentFields: null,     validFields: "any",     message: "string",     valid: false }
     },
     {
         "name": "2017-12-31_nouvel an_chatillion_jean charles",
         "path": "/Photo/50-Phototheque/##Events 10-15 j/2017-12-31_nouvel an_chatillion_jean charles",
         "description": null,
         "metaDataFromPhotoshoot": null,
-        "groupOfPhoto": null
+        "groupOfPhoto": null,
+        "validationResult": {     currentFields: null,     validFields: "any",     message: "string",     valid: false }
     },
     {
         "name": "2019-12-15_sport_antony_laureline",
         "path": "/Photo/50-Phototheque/##Events 10-15 j/2019-12-15_sport_antony_laureline",
         "description": null,
         "metaDataFromPhotoshoot": null,
-        "groupOfPhoto": null
+        "groupOfPhoto": null,
+        "validationResult": {     currentFields: null,     validFields: "any",     message: "string",     valid: false }
     }
 ];
 
@@ -1118,8 +1252,8 @@ const MOCK_PHOTOS: Photo[] = [
         "relativeToPath": "\\44.022.078.012.076.044.096.093.038.02021-08-31_151747_htc htc desire 626_2021_08_31_100media_imag5930.jpg",
         "filename": "44.022.078.012.076.044.096.093.038.02021-08-31_151747_htc htc desire 626_2021_08_31_100media_imag5930.jpg",
         "extension": "jpg",
-        "createdDate": "2025-03-27 17:12:48",
-        "exifDate": "2021-08-31 15:17:47",
+        "takenDate": "2025-03-27 17:12:48",
+        "sizeMB": 12,
         "createDate": null,
         "rating": 0,
         "label": null,
@@ -1133,8 +1267,8 @@ const MOCK_PHOTOS: Photo[] = [
         "relativeToPath": "\\27.058.099.044.089.020.00.0100.016.02021-08-31_145420_htc htc desire 626_2021_08_31_100media_imag5915.jpg",
         "filename": "27.058.099.044.089.020.00.0100.016.02021-08-31_145420_htc htc desire 626_2021_08_31_100media_imag5915.jpg",
         "extension": "jpg",
-        "createdDate": "2025-03-27 17:12:27",
-        "exifDate": "2021-08-31 14:54:20",
+        "takenDate": "2025-03-27 17:12:27",
+        "sizeMB": 12,
         "createDate": null,
         "rating": 0,
         "label": null,
@@ -1148,8 +1282,8 @@ const MOCK_PHOTOS: Photo[] = [
         "relativeToPath": "\\52.043.048.025.051.0htc htc desire 626_100media_htc htc desire 626_2022_08_31_100media_imag5918.jpg",
         "filename": "52.043.048.025.051.0htc htc desire 626_100media_htc htc desire 626_2022_08_31_100media_imag5918.jpg",
         "extension": "jpg",
-        "createdDate": "2025-03-27 21:38:52",
-        "exifDate": "2021-08-31 14:54:29",
+        "takenDate": "2025-03-27 21:38:52",
+        "sizeMB": 12,
         "createDate": null,
         "rating": 0,
         "label": null,
@@ -1163,8 +1297,8 @@ const MOCK_PHOTOS: Photo[] = [
         "relativeToPath": "\\16.042.060.048.031.0htc htc desire 626_100media_htc htc desire 626_2022_08_31_100media_imag5921.jpg",
         "filename": "16.042.060.048.031.0htc htc desire 626_100media_htc htc desire 626_2022_08_31_100media_imag5921.jpg",
         "extension": "jpg",
-        "createdDate": "2025-03-27 21:38:43",
-        "exifDate": "2021-08-31 15:02:46",
+        "takenDate": "2025-03-27 21:38:43",
+        "sizeMB": 12,
         "createDate": null,
         "rating": 0,
         "label": null,
@@ -1178,8 +1312,8 @@ const MOCK_PHOTOS: Photo[] = [
         "relativeToPath": "\\1.099.06.063.076.089.062.088.045.02021-08-31_150501_htc htc desire 626_2021_08_31_100media_imag5926.jpg",
         "filename": "1.099.06.063.076.089.062.088.045.02021-08-31_150501_htc htc desire 626_2021_08_31_100media_imag5926.jpg",
         "extension": "jpg",
-        "createdDate": "2025-03-27 17:12:47",
-        "exifDate": "2021-08-31 15:05:01",
+        "takenDate": "2025-03-27 17:12:47",
+        "sizeMB": 12,
         "createDate": null,
         "rating": 0,
         "label": null,
@@ -1193,8 +1327,8 @@ const MOCK_PHOTOS: Photo[] = [
         "relativeToPath": "\\25.095.054.081.092.0htc htc desire 626_100media_htc htc desire 626_2022_08_31_100media_imag5926.jpg",
         "filename": "25.095.054.081.092.0htc htc desire 626_100media_htc htc desire 626_2022_08_31_100media_imag5926.jpg",
         "extension": "jpg",
-        "createdDate": "2025-03-27 21:38:53",
-        "exifDate": "2021-08-31 15:05:01",
+        "takenDate": "2025-03-27 21:38:53",
+        "sizeMB": 12,
         "createDate": null,
         "rating": 0,
         "label": null,
@@ -1208,8 +1342,8 @@ const MOCK_PHOTOS: Photo[] = [
         "relativeToPath": "\\49.018.07.079.012.084.057.069.085.02021-08-31_145423_htc htc desire 626_2021_08_31_100media_imag5916.jpg",
         "filename": "49.018.07.079.012.084.057.069.085.02021-08-31_145423_htc htc desire 626_2021_08_31_100media_imag5916.jpg",
         "extension": "jpg",
-        "createdDate": "2025-03-27 17:12:27",
-        "exifDate": "2021-08-31 14:54:23",
+        "takenDate": "2025-03-27 17:12:27",
+        "sizeMB": 12,
         "createDate": null,
         "rating": 0,
         "label": null,
@@ -1223,8 +1357,8 @@ const MOCK_PHOTOS: Photo[] = [
         "relativeToPath": "\\14.037.056.048.092.0htc htc desire 626_100media_htc htc desire 626_2022_08_31_100media_imag5930.jpg",
         "filename": "14.037.056.048.092.0htc htc desire 626_100media_htc htc desire 626_2022_08_31_100media_imag5930.jpg",
         "extension": "jpg",
-        "createdDate": "2025-03-27 21:38:54",
-        "exifDate": "2021-08-31 15:17:47",
+        "takenDate": "2025-03-27 21:38:54",
+        "sizeMB": 12,
         "createDate": null,
         "rating": 0,
         "label": null,
@@ -1238,8 +1372,8 @@ const MOCK_PHOTOS: Photo[] = [
         "relativeToPath": "\\19.011.076.041.012.0htc htc desire 626_100media_htc htc desire 626_2022_08_31_100media_imag5924.jpg",
         "filename": "19.011.076.041.012.0htc htc desire 626_100media_htc htc desire 626_2022_08_31_100media_imag5924.jpg",
         "extension": "jpg",
-        "createdDate": "2025-03-27 21:38:57",
-        "exifDate": "2021-08-31 15:04:09",
+        "takenDate": "2025-03-27 21:38:57",
+        "sizeMB": 12,
         "createDate": null,
         "rating": 0,
         "label": null,
@@ -1253,8 +1387,8 @@ const MOCK_PHOTOS: Photo[] = [
         "relativeToPath": "\\73.0100.061.094.020.0htc htc desire 626_100media_htc htc desire 626_2022_08_31_100media_imag5922.jpg",
         "filename": "73.0100.061.094.020.0htc htc desire 626_100media_htc htc desire 626_2022_08_31_100media_imag5922.jpg",
         "extension": "jpg",
-        "createdDate": "2025-03-27 21:38:58",
-        "exifDate": "2021-08-31 15:03:29",
+        "takenDate": "2025-03-27 21:38:58",
+        "sizeMB": 12,
         "createDate": null,
         "rating": 0,
         "label": null,
@@ -1268,8 +1402,8 @@ const MOCK_PHOTOS: Photo[] = [
         "relativeToPath": "\\93.022.046.00.09.0htc htc desire 626_100media_htc htc desire 626_2022_08_31_100media_imag5916.jpg",
         "filename": "93.022.046.00.09.0htc htc desire 626_100media_htc htc desire 626_2022_08_31_100media_imag5916.jpg",
         "extension": "jpg",
-        "createdDate": "2025-03-27 21:38:49",
-        "exifDate": "2021-08-31 14:54:23",
+        "takenDate": "2025-03-27 21:38:49",
+        "sizeMB": 12,
         "createDate": null,
         "rating": 0,
         "label": null,
@@ -1283,8 +1417,8 @@ const MOCK_PHOTOS: Photo[] = [
         "relativeToPath": "\\8.024.067.016.019.0htc htc desire 626_100media_htc htc desire 626_2022_08_31_100media_imag5919.jpg",
         "filename": "8.024.067.016.019.0htc htc desire 626_100media_htc htc desire 626_2022_08_31_100media_imag5919.jpg",
         "extension": "jpg",
-        "createdDate": "2025-03-27 21:38:41",
-        "exifDate": "2021-08-31 15:01:38",
+        "takenDate": "2025-03-27 21:38:41",
+        "sizeMB": 12,
         "createDate": null,
         "rating": 0,
         "label": null,
@@ -1298,8 +1432,8 @@ const MOCK_PHOTOS: Photo[] = [
         "relativeToPath": "\\81.047.08.044.044.0htc htc desire 626_100media_htc htc desire 626_2022_08_31_100media_imag5917.jpg",
         "filename": "81.047.08.044.044.0htc htc desire 626_100media_htc htc desire 626_2022_08_31_100media_imag5917.jpg",
         "extension": "jpg",
-        "createdDate": "2025-03-27 21:38:47",
-        "exifDate": "2021-08-31 14:54:25",
+        "takenDate": "2025-03-27 21:38:47",
+        "sizeMB": 12,
         "createDate": null,
         "rating": 0,
         "label": null,
@@ -1313,8 +1447,8 @@ const MOCK_PHOTOS: Photo[] = [
         "relativeToPath": "\\22.099.036.065.014.033.054.022.015.02021-08-31_145425_htc htc desire 626_2021_08_31_100media_imag5917.jpg",
         "filename": "22.099.036.065.014.033.054.022.015.02021-08-31_145425_htc htc desire 626_2021_08_31_100media_imag5917.jpg",
         "extension": "jpg",
-        "createdDate": "2025-03-27 17:12:29",
-        "exifDate": "2021-08-31 14:54:25",
+        "takenDate": "2025-03-27 17:12:29",
+        "sizeMB": 12,
         "createDate": null,
         "rating": 0,
         "label": null,
@@ -1328,8 +1462,8 @@ const MOCK_PHOTOS: Photo[] = [
         "relativeToPath": "\\47.095.034.011.07.032.012.015.02.02021-08-31_150329_htc htc desire 626_2021_08_31_100media_imag5922.jpg",
         "filename": "47.095.034.011.07.032.012.015.02.02021-08-31_150329_htc htc desire 626_2021_08_31_100media_imag5922.jpg",
         "extension": "jpg",
-        "createdDate": "2025-03-27 17:12:40",
-        "exifDate": "2021-08-31 15:03:29",
+        "takenDate": "2025-03-27 17:12:40",
+        "sizeMB": 12,
         "createDate": null,
         "rating": 0,
         "label": null,
@@ -1343,8 +1477,8 @@ const MOCK_PHOTOS: Photo[] = [
         "relativeToPath": "\\62.051.074.036.072.061.096.087.042.02021-08-31_150138_htc htc desire 626_2021_08_31_100media_imag5919.jpg",
         "filename": "62.051.074.036.072.061.096.087.042.02021-08-31_150138_htc htc desire 626_2021_08_31_100media_imag5919.jpg",
         "extension": "jpg",
-        "createdDate": "2025-03-27 17:12:34",
-        "exifDate": "2021-08-31 15:01:38",
+        "takenDate": "2025-03-27 17:12:34",
+        "sizeMB": 12,
         "createDate": null,
         "rating": 0,
         "label": null,
@@ -1358,8 +1492,8 @@ const MOCK_PHOTOS: Photo[] = [
         "relativeToPath": "\\17.03.085.093.021.083.063.013.070.02021-08-31_150409_htc htc desire 626_2021_08_31_100media_imag5924.jpg",
         "filename": "17.03.085.093.021.083.063.013.070.02021-08-31_150409_htc htc desire 626_2021_08_31_100media_imag5924.jpg",
         "extension": "jpg",
-        "createdDate": "2025-03-27 17:12:45",
-        "exifDate": "2021-08-31 15:04:09",
+        "takenDate": "2025-03-27 17:12:45",
+        "sizeMB": 12,
         "createDate": null,
         "rating": 0,
         "label": null,
@@ -1373,8 +1507,8 @@ const MOCK_PHOTOS: Photo[] = [
         "relativeToPath": "\\0.039.061.011.06.040.054.033.051.02021-08-31_145429_htc htc desire 626_2021_08_31_100media_imag5918.jpg",
         "filename": "0.039.061.011.06.040.054.033.051.02021-08-31_145429_htc htc desire 626_2021_08_31_100media_imag5918.jpg",
         "extension": "jpg",
-        "createdDate": "2025-03-27 17:12:33",
-        "exifDate": "2021-08-31 14:54:29",
+        "takenDate": "2025-03-27 17:12:33",
+        "sizeMB": 12,
         "createDate": null,
         "rating": 0,
         "label": null,
@@ -1388,8 +1522,8 @@ const MOCK_PHOTOS: Photo[] = [
         "relativeToPath": "\\71.061.080.048.023.077.012.075.098.02021-08-31_150246_htc htc desire 626_2021_08_31_100media_imag5921.jpg",
         "filename": "71.061.080.048.023.077.012.075.098.02021-08-31_150246_htc htc desire 626_2021_08_31_100media_imag5921.jpg",
         "extension": "jpg",
-        "createdDate": "2025-03-27 17:12:37",
-        "exifDate": "2021-08-31 15:02:46",
+        "takenDate": "2025-03-27 17:12:37",
+        "sizeMB": 12,
         "createDate": null,
         "rating": 0,
         "label": null,
@@ -1403,8 +1537,8 @@ const MOCK_PHOTOS: Photo[] = [
         "relativeToPath": "\\5.052.082.014.075.0htc htc desire 626_100media_htc htc desire 626_2022_08_31_100media_imag5915.jpg",
         "filename": "5.052.082.014.075.0htc htc desire 626_100media_htc htc desire 626_2022_08_31_100media_imag5915.jpg",
         "extension": "jpg",
-        "createdDate": "2025-03-27 21:38:59",
-        "exifDate": "2021-08-31 14:54:20",
+        "takenDate": "2025-03-27 21:38:59",
+        "sizeMB": 12,
         "createDate": null,
         "rating": 0,
         "label": null,
