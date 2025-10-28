@@ -31,8 +31,9 @@ pipeline {
                         def password = env.HUB_REPO_PASS
                         sh "docker version"
                         sh "docker login -u $user -p $password"
-                        sh "docker build -t maliciamrg/${packageJson.name.toLowerCase()}:${packageJson.version} . "
+                        sh "docker build -t maliciamrg/${packageJson.name.toLowerCase()}:${packageJson.version} -t maliciamrg/${packageJson.name.toLowerCase()}:latest . "
                         sh "docker push maliciamrg/${packageJson.name.toLowerCase()}:${packageJson.version}"
+                        sh "docker push maliciamrg/${packageJson.name.toLowerCase()}:latest"
                         sleep 10 // Wait for 10 seconds
                     }
                 }

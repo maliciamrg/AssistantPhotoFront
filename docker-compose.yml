@@ -1,10 +1,7 @@
-version: '3.8'
 services:
   frontend:
     container_name: assistant_photo_frontend_ui
-    build:
-      context: .
-      dockerfile: Dockerfile
+    image: maliciamrg/assistant_photo_frontend:latest
     ports:
       - "8192:3000"
     networks:
