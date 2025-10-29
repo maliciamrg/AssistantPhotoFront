@@ -5,7 +5,7 @@ services:
     image: maliciamrg/assistant_photo_frontend:latest
     environment:
       # Where your built files live in the container
-      ASSET_DIR: /var/www/html
+      ASSET_DIR: /dist/assets
       # Prefix used for placeholder detection
       APP_PREFIX: PREFIX_
       # Real values for your frontend to consume
