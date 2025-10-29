@@ -12,7 +12,7 @@ RUN npm install
 RUN npm i -g serve
 
 COPY . .
-COPY env.sh /docker-entrypoint.sh
+COPY docker-entrypoint.sh /docker-entrypoint.sh
 RUN dos2unix /docker-entrypoint.sh
 RUN chmod +x /docker-entrypoint.sh
 

@@ -1,10 +1,10 @@
 #!/usr/bin/env sh
 # ================================================================================
-# File: env.sh
+# File: docker-entrypoint.sh
 # Description: Replaces environment variables in asset files.
 # Usage: Run this script in your terminal or Docker entrypoint.
 #          Example:
-#             APP_PREFIX="VITE_" ASSET_DIR="/usr/share/nginx/html" ./env.sh
+#             APP_PREFIX="VITE_" ASSET_DIR="/usr/share/nginx/html" ./docker-entrypoint.sh
 # ================================================================================
 
 # Exit immediately if any command fails
