@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Select, {SingleValue} from 'react-select';
 import { useNavigate } from 'react-router-dom';
-import { getPhotoshootTypes, getPhotoShoot } from '../api';
+import {getPhotoshootTypes, getPhotoShoot, API_BASE_URL} from '../api';
 import {PhotoshootType, PhotoShoot, PhotoShootOption} from '../types';
 import { Camera } from 'lucide-react';
 
@@ -177,6 +177,16 @@ export default function StartupPage() {
           >
             Continue to Dashboard
           </button>
+
+          <div className="relative group mt-3">
+            <span className="text-sm text-gray-500 cursor-pointer">
+              Hover to reveal API URL
+            </span>
+            <span
+                className="absolute left-0 top-full mt-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-gray-800 text-white text-xs rounded-md px-2 py-1 whitespace-nowrap">
+              {API_BASE_URL}
+            </span>
+          </div>
         </form>
       </div>
     </div>

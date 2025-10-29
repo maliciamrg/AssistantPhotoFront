@@ -1,7 +1,10 @@
+name: assistant-photo
 services:
   frontend:
     container_name: assistant_photo_frontend_ui
     image: maliciamrg/assistant_photo_frontend:latest
+    environment:
+      - VITE_APP_BACKEND_ADDRESS=http://assistant_photo_backend_service:8099/api
     ports:
       - "8192:3000"
     networks:
