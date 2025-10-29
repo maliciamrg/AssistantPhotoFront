@@ -9,8 +9,7 @@ services:
       # Prefix used for placeholder detection
       APP_PREFIX: PREFIX_
       # Real values for your frontend to consume
-      PREFIX_API_URL: "http://assistant_photo_backend_service:8099/api"
-      #VITE_APP_BACKEND_ADDRESS: http://assistant_photo_backend_service:8099/api
+      PREFIX_API_URL: "http://192.212.10.200:8099/api"
     ports:
       - "8192:3000"
     networks:
