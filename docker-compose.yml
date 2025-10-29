@@ -4,7 +4,13 @@ services:
     container_name: assistant_photo_frontend_ui
     image: maliciamrg/assistant_photo_frontend:latest
     environment:
-      - VITE_APP_BACKEND_ADDRESS=http://assistant_photo_backend_service:8099/api
+      # Where your built files live in the container
+      ASSET_DIR: /var/www/html
+      # Prefix used for placeholder detection
+      APP_PREFIX: PREFIX_
+      # Real values for your frontend to consume
+      PREFIX_API_URL: "https://api.myapp.com"
+      #VITE_APP_BACKEND_ADDRESS: http://assistant_photo_backend_service:8099/api
     ports:
       - "8192:3000"
     networks:

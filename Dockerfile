@@ -12,12 +12,14 @@ RUN npm install
 RUN npm i -g serve
 
 COPY . .
-
-ARG VITE_APP_BACKEND_ADDRESS
+COPY env.sh /docker-entrypoint.d/env.sh
+RUN dos2unix /docker-entrypoint.d/env.sh
+RUN chmod +x /docker-entrypoint.d/env.sh
 
 RUN npm run build
 
 EXPOSE 3000
 
+ENTRYPOINT ["/docker-entrypoint.sh"]
 CMD [ "serve", "-s", "dist" ]
 
