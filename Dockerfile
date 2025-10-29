@@ -13,8 +13,6 @@ RUN npm i -g serve
 
 COPY . .
 
-ARG VITE_APP_BACKEND_ADDRESS
-
 RUN npm run build
 
 EXPOSE 3000

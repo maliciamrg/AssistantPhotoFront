@@ -1,6 +1,6 @@
 import {Photo, PhotoShoot, PhotoshootNameNewDTO, PhotoshootType, Tag} from "../types";
 
-export const API_BASE_URL = import.meta.env.VITE_APP_BACKEND_ADDRESS || 'http://localhost:8099/api';
+export const API_BASE_URL = 'http://localhost:8099/api';
 
 // Mock data for development
 const MOCK_SEANCE_TYPES: PhotoshootType[] = [
