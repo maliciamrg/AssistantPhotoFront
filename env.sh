@@ -47,3 +47,6 @@ env | grep "^${APP_PREFIX}" | while IFS='=' read -r key value; do
 done
 
 echo "✅ Environment variable substitution complete."
+
+# Then start the main command
+exec "$@"
