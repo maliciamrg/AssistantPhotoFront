@@ -31,9 +31,19 @@ pipeline {
                         def password = env.HUB_REPO_PASS
                         sh "docker version"
                         sh "docker login -u $user -p $password"
-                        sh "docker build -t maliciamrg/${packageJson.name.toLowerCase()}:${packageJson.version} -t maliciamrg/${packageJson.name.toLowerCase()}:latest . "
+
+                        // Build image with both tags
+                        sh "docker build -t maliciamrg/${packageJson.name.toLowerCase()}:${packageJson.version} ."
+
+                        // Always push versioned tag
                         sh "docker push maliciamrg/${packageJson.name.toLowerCase()}:${packageJson.version}"
-                        sh "docker push maliciamrg/${packageJson.name.toLowerCase()}:latest"
+
+                        // Push 'latest' only if master branch
+                        if (env.BRANCH_NAME == 'master') {
+                            sh "docker tag maliciamrg/${packageJson.name.toLowerCase()}:${packageJson.version} maliciamrg/${packageJson.name.toLowerCase()}:latest"
+                            sh "docker push maliciamrg/${packageJson.name.toLowerCase()}:latest"
+                        }
+
                         sleep 10 // Wait for 10 seconds
                     }
                 }
