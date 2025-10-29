@@ -20,6 +20,6 @@ RUN npm run build
 
 EXPOSE 3000
 
-#ENTRYPOINT ["/docker-entrypoint.sh"]
+ENTRYPOINT ["/docker-entrypoint.sh"]
 CMD [ "serve", "-s", "dist" ]
 
